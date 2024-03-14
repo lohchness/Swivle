@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvh03h8jek3sd"]
+
+[ext_resource type="Texture2D" uid="uid://gmo73jms7334" path="res://assets/pivot.png" id="1_m4emy"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("1_m4emy")

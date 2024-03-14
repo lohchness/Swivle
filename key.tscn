@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://inpx7swyy2bd"]
+
+[ext_resource type="Texture2D" uid="uid://b6q2tfc77g5qi" path="res://assets/key.png" id="1_6ebup"]
+[ext_resource type="Script" path="res://Key.gd" id="2_oxq1a"]
+[ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="3_oxo1i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trt54"]
+size = Vector2(127.75, 127.25)
+
+[node name="Key" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_6ebup")
+centered = false
+script = ExtResource("2_oxq1a")
+metadata/_edit_vertical_guides_ = [128.0, 64.0]
+metadata/_edit_horizontal_guides_ = [128.0, 64.0]
+
+[node name="Letter" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -59.0
+offset_right = 22.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_oxo1i")
+theme_override_font_sizes/font_size = 116
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(64, 64)
+shape = SubResource("RectangleShape2D_trt54")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
