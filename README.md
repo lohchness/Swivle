@@ -10,6 +10,12 @@ Select two letters to pivot, three or more to submit (spacebar for both actions)
 
 Here's a demo (the first version, without any scoring/moves/theme overhauls implemented):
 
+
+
+https://github.com/lohchness/swivle/assets/50405970/110ab67b-2728-4c7e-bce9-f458fd0dfbfa
+
+
+
 ## Upcoming
 
 - Theme overhaul: Updated key sprites to match above title, individual letter scoring, backgrounds.
