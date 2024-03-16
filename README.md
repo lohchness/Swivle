@@ -16,12 +16,12 @@ https://github.com/lohchness/swivle/assets/50405970/110ab67b-2728-4c7e-bce9-f458
 
 
 
-## Upcoming
+# Upcoming
 
 - Theme overhaul: Updated key sprites to match above title, individual letter scoring, backgrounds.
 - Moves counter, score counter.
 - Main menu: past scores, new game.
 
-## Changelog
+# Changelog
 
 v1.0 - Letter swapping.
