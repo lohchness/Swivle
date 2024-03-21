@@ -2,7 +2,7 @@
 
 ![](/assets/swivle2.png)
 
-A game about pivoting letters to make words.
+A game about pivoting letters to make words. [Blogpost!](https://lohchness.github.io/posts/swivle/)
 
 # How to play
 
