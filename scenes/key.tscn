@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://inpx7swyy2bd"]
 
 [ext_resource type="Texture2D" uid="uid://b6q2tfc77g5qi" path="res://assets/key.png" id="1_6ebup"]
-[ext_resource type="Script" path="res://Key.gd" id="2_oxq1a"]
+[ext_resource type="Script" path="res://scripts/Key.gd" id="2_oxq1a"]
 [ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="3_oxo1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trt54"]

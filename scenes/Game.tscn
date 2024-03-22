@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ccrooakwud30n"]
 
-[ext_resource type="Script" path="res://Game.gd" id="1_d0sg0"]
-[ext_resource type="PackedScene" uid="uid://dwr7ox45xkroh" path="res://processor.tscn" id="2_ahnbo"]
-[ext_resource type="PackedScene" uid="uid://c0pf0xo0db3ml" path="res://hand.tscn" id="3_ep3bm"]
+[ext_resource type="Script" path="res://scripts/Game.gd" id="1_d0sg0"]
+[ext_resource type="PackedScene" uid="uid://dwr7ox45xkroh" path="res://scenes/processor.tscn" id="2_ahnbo"]
+[ext_resource type="PackedScene" uid="uid://c0pf0xo0db3ml" path="res://scenes/hand.tscn" id="3_ep3bm"]
 [ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="4_wd400"]
 
 [node name="Game" type="Node2D"]
