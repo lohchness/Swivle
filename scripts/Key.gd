@@ -24,7 +24,7 @@ var colors = [
 ]
 var shade_color = Color("000000", .5) # Grayscale with alpha value 133
 
-var max_tilt : float = 0.15
+var max_tilt : float = 0.1
 var curr_tilt : float = 0
 
 var number : int = 0
