@@ -7,6 +7,8 @@ var fours : Array
 var fives : Array
 var sixes : Array
 
+const NUM_KEYS = 6
+
 func _ready():
 	load_file()
 	randomize()
@@ -35,7 +37,7 @@ func load_file():
 
 func get_next_string(letters):
 	print("-----------------------")
-	var remaining_letters = 6 - len(letters)
+	var remaining_letters = NUM_KEYS - len(letters)
 	var chosen : String = ""
 	var another : String = ""
 	
@@ -71,7 +73,7 @@ func get_next_string(letters):
 	
 	chosen = shuffle_string(chosen)
 	print_debug(letters + chosen + rest_str)
-	assert(len(letters + chosen + rest_str) == 6)
+	assert(len(letters + chosen + rest_str) == NUM_KEYS)
 	
 	return chosen + rest_str
 	
