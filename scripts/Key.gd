@@ -2,6 +2,7 @@ extends Node2D
 class_name Key
 
 @onready var letter = $Letter
+@onready var score = $Score
 @onready var area = $Area2D
 @onready var collision = $Area2D/CollisionShape2D
 
@@ -24,7 +25,17 @@ var colors = [
 ]
 var shade_color = Color("000000", .5) # Grayscale with alpha value 133
 
-var max_tilt : float = 0.1
+var letter_points = {
+	1 : ["E", "A", "I", "O", "N", "R", "T", "L", "S", "U"],
+	2 : ["D", "G"],
+	3 : ["B", "C", "M", "P"],
+	4 : ["F", "H", "V", "W", "Y"],
+	5 : ["K"],
+	8 : ["J", "X"],
+	10 : ["Q", "Z"]
+}
+
+var max_tilt : float = 0.15
 var curr_tilt : float = 0
 
 var number : int = 0
@@ -35,10 +46,16 @@ var target_opacity : int
 var base_position
 var shade_base_position
 
+var curr_scale
+var base_scale
+var zoom_in_scalar = 1.1
+
 func _ready():
 	base_position = position
 	shade_base_position = $keySprites/Shade.position
 	target_opacity = modulate.a8
+	base_scale = scale
+	curr_scale = base_scale
 	
 	# Choose a colour
 	var color = colors.pick_random()
@@ -47,6 +64,7 @@ func _ready():
 	$keySprites/Side.modulate = color[SIDE]
 	$keySprites/Shade.modulate = shade_color
 	letter.set("theme_override_colors/font_color", color[FONT])
+	score.set("theme_override_colors/font_color", color[FONT])
 	
 	pass
 
@@ -63,7 +81,11 @@ func _physics_process(delta):
 	for i : Sprite2D in $keySprites.get_children():
 		i.rotation = curr_tilt
 	$Letter.rotation = curr_tilt
+	$Score.rotation = curr_tilt * 2
 	curr_tilt /= 2
+	
+	# TODO : Scale from center
+	#scale = lerp(scale, curr_scale, 50 * delta)
 	
 	# Disappear on submit
 	modulate.a8 = lerp(modulate.a8, target_opacity, 25 * delta) 
@@ -71,8 +93,6 @@ func _physics_process(delta):
 		queue_free()
 
 func _on_area_2d_input_event(viewport, event, shape_idx):
-	#if Input.is_action_just_pressed("Click") and not event.is_echo():
-	#if event is InputEventKey and event.pressed:
 	# Prevents from triggering twice in one frames
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		self.on_click()
@@ -94,6 +114,15 @@ func get_letter() -> String:
 func set_letter(l : String) -> void:
 	#assert(len(l) == 1)
 	letter.text = l
+	set_score()
+
+func get_score():
+	return int(score.text)
+
+func set_score():
+	for point in letter_points:
+		if letter.text in letter_points[point]:
+			score.text = str(point)
 
 func select():
 	select_signal.emit(number)
@@ -115,10 +144,18 @@ func disappear():
 
 func _on_area_2d_mouse_entered():
 	wiggle()
+	zoom_in()
+
 
 func wiggle():
 	curr_tilt = max_tilt
-	#if get_local_mouse_position().x > $keySprites.position.x:
-		#curr_tilt = max_tilt
-	#else:
-		#curr_tilt = -max_tilt
+
+
+func zoom_in():
+	curr_scale = base_scale * zoom_in_scalar
+
+func zoom_out():
+	curr_scale = base_scale
+
+func _on_area_2d_mouse_exited():
+	zoom_out()

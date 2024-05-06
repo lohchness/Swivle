@@ -62,8 +62,16 @@ offset_right = 91.0
 offset_bottom = 90.0
 theme_override_fonts/font = ExtResource("3_oxo1i")
 theme_override_font_sizes/font_size = 116
+text = "A"
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Score" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 3.0
+offset_right = 56.0
+offset_bottom = 44.0
+theme_override_fonts/font = ExtResource("3_oxo1i")
+theme_override_font_sizes/font_size = 30
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

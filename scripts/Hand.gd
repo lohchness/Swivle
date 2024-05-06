@@ -6,12 +6,15 @@ const key = preload("res://scenes/key.tscn")
 var x_offset = 25
 
 signal key_selected(index: int)
-signal check_words(word : String)
+signal check_words(word : String, score : int)
 signal pivoted
 
 var selected_keys = []
 
 const NUM_KEYS = 6
+
+var base_position
+var off_screen
 
 func _ready():
 	# Initialize 6 Keys in Hand
@@ -25,6 +28,9 @@ func _ready():
 		newkey.set_number(i)
 		newkey.select_signal.connect(Callable(self, "key_select_signal"))
 		newkey.deselect_signal.connect(Callable(self, "key_deselect_signal"))
+	
+	base_position = position
+	off_screen = base_position
 
 
 func _process(delta):	
@@ -35,37 +41,43 @@ func _process(delta):
 		selected_keys.sort()
 		if can_submit(selected_keys):
 			var str = get_hand_string(selected_keys.min(), selected_keys.max())
-			print("Submitting " + str)
-			check_words.emit(str)
+			var score = get_score()
+			check_words.emit(str, score)
 	if Input.is_action_just_pressed("Release"):
 		for i in keys:
 			i.deselect()
 	
-	pass
+	if Input.is_action_just_pressed("ONE"):
+		keys[0].on_click()
+	if Input.is_action_just_pressed("TWO"):
+		keys[1].on_click()
+	if Input.is_action_just_pressed("THREE"):
+		keys[2].on_click()
+	if Input.is_action_just_pressed("FOUR"):
+		keys[3].on_click()
+	if Input.is_action_just_pressed("FIVE"):
+		keys[4].on_click()
+	if Input.is_action_just_pressed("SIX"):
+		keys[5].on_click()
+	
+	position = lerp(position, off_screen, 20 * delta)
+
 
 
 # Remove selected keys from game and generate new ones at the tail.
 func valid_word():
-	print("Valid word!")
-
-	## Update Key array
+	# Update Key array
 	var tmpkeys : Array[Key] = []
 	for i in range(len(keys)): 
 		if i not in selected_keys:
 			tmpkeys.append(keys[i])
-			print("Adding number " + str(i) + "to new keys array" )
-	
-	print("Selected keys:")
-	print(selected_keys)
-	
-	#print(selected_keys)
+
 	for i in selected_keys:
 		keys[i].disappear()
-	#
+	
 	keys = tmpkeys
 	update_hand_numbers()
 	update_hand_positions()
-	print("Length of new keys array: " + str(len(keys)))
 
 	selected_keys = []
 
@@ -76,25 +88,22 @@ func append_letters(letters : String):
 		keys.append(newkey)
 		newkey.position = Vector2(x_offset + winsize.x, winsize.y / 2)
 		newkey.set_letter(str(i))
-		#newkey.set_number(i)
 		newkey.select_signal.connect(Callable(self, "key_select_signal"))
 		newkey.deselect_signal.connect(Callable(self, "key_deselect_signal"))
+	
 	update_hand_numbers()
 	update_hand_positions()
 
 # Invalid word
 func invalid_word():
-	print("Invalid word! Try again")
 	for i in selected_keys:
 		keys[i].wiggle()
 
 func key_select_signal(number : int):
-	#print("Selected number " + str(number))
 	selected_keys.append(number)
 	pass
 
 func key_deselect_signal(number : int):
-	#print("Deselected number " + str(number))
 	selected_keys.erase(number)
 	pass
 
@@ -120,23 +129,20 @@ func pivot(start : int, end : int): # Indexes of keys. Start < End. Is 0-indexed
 	var tmp2 = min(start, end)
 	start = tmp2
 	end = tmp1
-	#print("Pivoting " + str(start) + " to " + str(end))
-	#print("Keys has length " + str(len(keys)))
 	assert(len(keys) > end)
 	
-	# Basic swap
 	while (end - start > 0):
 		var tmp = keys[start]
 		keys[start] = keys[end]
 		keys[end] = tmp
 		start += 1
 		end -= 1
+	
 	update_hand_positions()
 	update_hand_numbers()
 
 func update_hand_positions():
 	for i in range(len(keys)):
-		#print(i)
 		keys[i].set_base_position(Vector2(x_offset + (i * winsize.x / NUM_KEYS), winsize.y / 2))
 
 func update_hand_numbers():
@@ -154,3 +160,16 @@ func can_submit(selected_keys) -> bool:
 
 func can_pivot(selected_keys):
 	return len(selected_keys) == 2
+
+func get_score() -> int:
+	var sum = 0
+	for i in selected_keys:
+		sum += keys[i].get_score()
+	return sum
+
+func game_over():
+	#set_process(false)
+	off_screen = base_position - Vector2(0, 500)
+	
+	#for key in keys:
+		#key.set_physics_process(false)

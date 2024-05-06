@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccrooakwud30n"]
+[gd_scene load_steps=12 format=3 uid="uid://ccrooakwud30n"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_d0sg0"]
 [ext_resource type="PackedScene" uid="uid://dwr7ox45xkroh" path="res://scenes/processor.tscn" id="2_ahnbo"]
 [ext_resource type="Texture2D" uid="uid://dk1kerf8rp1vw" path="res://assets/Background.png" id="2_eqalo"]
+[ext_resource type="Texture2D" uid="uid://k60b7mpnl7pw" path="res://assets/Corner.png" id="3_8qebx"]
 [ext_resource type="PackedScene" uid="uid://c0pf0xo0db3ml" path="res://scenes/hand.tscn" id="3_ep3bm"]
+[ext_resource type="Texture2D" uid="uid://diixlb0omic6u" path="res://assets/Wall.png" id="4_2mllk"]
 [ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="4_wd400"]
+[ext_resource type="Script" path="res://scenes/TopBar.gd" id="7_u6xxe"]
+[ext_resource type="Texture2D" uid="uid://dqrj0xaa6v7kg" path="res://assets/small_window.png" id="8_nk5xq"]
+[ext_resource type="Texture2D" uid="uid://iibm3h362gtv" path="res://assets/menu_burger.png" id="9_s58x2"]
+[ext_resource type="PackedScene" uid="uid://ctau5r7efkgkr" path="res://scenes/Countdown.tscn" id="9_yiqp2"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_d0sg0")
@@ -18,16 +24,100 @@ texture = ExtResource("2_eqalo")
 region_enabled = true
 region_rect = Rect2(0, 0, 1200, 700)
 
+[node name="Corners" type="Node2D" parent="."]
+
+[node name="Corner" type="Sprite2D" parent="Corners"]
+texture_filter = 1
+position = Vector2(48, 48)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_8qebx")
+region_rect = Rect2(0, 0, 1200, 700)
+
+[node name="Corner2" type="Sprite2D" parent="Corners"]
+texture_filter = 1
+position = Vector2(48, 600)
+scale = Vector2(1.5, -1.5)
+texture = ExtResource("3_8qebx")
+region_rect = Rect2(0, 0, 1200, 700)
+
+[node name="Corner3" type="Sprite2D" parent="Corners"]
+texture_filter = 1
+position = Vector2(1104, 600)
+rotation = 3.14159
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_8qebx")
+region_rect = Rect2(0, 0, 1200, 700)
+
+[node name="Corner4" type="Sprite2D" parent="Corners"]
+texture_filter = 1
+position = Vector2(1104, 48)
+rotation = 3.14159
+scale = Vector2(1.5, -1.5)
+texture = ExtResource("3_8qebx")
+region_rect = Rect2(0, 0, 1200, 700)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Wall" type="Sprite2D" parent="Walls"]
+texture_filter = 1
+position = Vector2(576, 48)
+scale = Vector2(15, 1.5)
+texture = ExtResource("4_2mllk")
+region_rect = Rect2(0, 0, 1200, 700)
+
+[node name="Wall2" type="Sprite2D" parent="Walls"]
+texture_filter = 1
+position = Vector2(576.158, 600)
+scale = Vector2(-15.0001, -1.5)
+texture = ExtResource("4_2mllk")
+region_rect = Rect2(0, 0, 1200, 700)
+
+[node name="Wall3" type="Sprite2D" parent="Walls"]
+texture_filter = 1
+position = Vector2(48, 324.008)
+rotation = 1.5708
+scale = Vector2(7.12524, -1.5)
+texture = ExtResource("4_2mllk")
+region_rect = Rect2(0, 0, 1200, 700)
+
+[node name="Wall4" type="Sprite2D" parent="Walls"]
+texture_filter = 1
+position = Vector2(1104, 324)
+rotation = 1.5708
+scale = Vector2(-7.125, 1.5)
+texture = ExtResource("4_2mllk")
+region_rect = Rect2(0, 0, 1200, 700)
+
 [node name="WordProcessor" parent="." instance=ExtResource("2_ahnbo")]
 
 [node name="Hand" parent="." instance=ExtResource("3_ep3bm")]
 
-[node name="MoveCounter" type="Label" parent="."]
-offset_left = 88.0
-offset_top = 56.0
-offset_right = 291.0
-offset_bottom = 117.0
+[node name="TopBar" type="Node2D" parent="."]
+script = ExtResource("7_u6xxe")
+
+[node name="MenuWindow" type="Sprite2D" parent="TopBar"]
+texture_filter = 1
+position = Vector2(188, 116)
+texture = ExtResource("8_nk5xq")
+
+[node name="Sprite2D" type="Sprite2D" parent="TopBar/MenuWindow"]
+texture = ExtResource("9_s58x2")
+
+[node name="ScoreWindow" type="Sprite2D" parent="TopBar"]
+texture_filter = 1
+position = Vector2(954, 116)
+texture = ExtResource("8_nk5xq")
+
+[node name="ScoreCounter" type="Label" parent="TopBar"]
+texture_filter = 1
+offset_left = 813.0
+offset_top = 85.0
+offset_right = 1016.0
+offset_bottom = 146.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_wd400")
-theme_override_font_sizes/font_size = 76
-text = "Moves: "
+theme_override_font_sizes/font_size = 65
+horizontal_alignment = 2
+
+[node name="Timer" parent="TopBar" instance=ExtResource("9_yiqp2")]
+position = Vector2(565, 116)

@@ -15,7 +15,6 @@ func _ready():
 
 func load_file():
 	var f = FileAccess.open(filtered_words, FileAccess.READ)
-	var count = 0
 	while not f.eof_reached():
 		var line = f.get_line().strip_edges()
 		all.append(line)
@@ -28,12 +27,7 @@ func load_file():
 				fives.append(line)
 			6:
 				sixes.append(line)
-	
 	f.close()
-	#print_debug(len(threes))
-	#print_debug(len(fours))
-	#print_debug(len(fives))
-	#print_debug(len(sixes))
 
 func get_next_string(letters):
 	print("-----------------------")
@@ -76,8 +70,6 @@ func get_next_string(letters):
 	assert(len(letters + chosen + rest_str) == NUM_KEYS)
 	
 	return chosen + rest_str
-	
-	#return letters + chosen + rest_str 
 
 func any(letters : String, word : String):
 	for i in letters:
