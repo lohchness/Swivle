@@ -6,22 +6,32 @@ A game about pivoting letters to make words. [Blogpost!](https://lohchness.githu
 
 # How to play
 
-Select two letters to pivot, three or more to submit (spacebar for both actions). You have a limited amount of moves and submitting a word returns moves - 3 letters: 1 move 4-5 letters: 2 moves, 6 letters: 3 moves.
+Select two letters to pivot, three or more to submit (spacebar for both actions). You have a limited amount of time and submitting a word extends your time - the longer the word, the more time is extended.
 
-Here's a demo (the first version, without any scoring/moves/theme overhauls implemented):
+v1.1 demo:
 
 
 
-https://github.com/lohchness/swivle/assets/50405970/110ab67b-2728-4c7e-bce9-f458fd0dfbfa
+https://github.com/lohchness/Swivle/assets/50405970/3112f0ee-da23-4dce-9bcd-d1c01cefecfb
 
 
 
 # Upcoming
 
-- Theme overhaul: Updated key sprites to match above title, individual letter scoring, backgrounds.
-- Moves counter, score counter.
 - Main menu: past scores, new game.
+- Pause/unpause
+- Game over screen
+- Better word choosing algorithm
 
 # Changelog
+
+v1.1 - Major overhaul!
+
+- Updated keys to match title with colors
+- Time limit instead of move limit
+- Score counter
+- """Game over""" screen, press Enter to restart
+
+____________
 
 v1.0 - Letter swapping.
