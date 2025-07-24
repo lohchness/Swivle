@@ -26,7 +26,7 @@ func _ready() -> void:
 	target_percentage = percentage
 
 
-func _process(delta) -> void:
+func _process(delta: float) -> void:
 	percentage -= curr_rate * delta / 100
 
 	# Percentage
@@ -57,13 +57,13 @@ func update_rate() -> void:
 		change_rate(START_RATE)
 
 
-func add_time(num_letters) -> void:
+func add_time(num_letters: int) -> void:
 	percentage += add_progress * num_letters
 
 	update_rate()
 
 
-func change_rate(to) -> void:
+func change_rate(to: int) -> void:
 	curr_rate = to
 
 

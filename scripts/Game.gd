@@ -8,7 +8,7 @@ var text: String = ""
 
 @onready var hand: Hand = $Hand
 @onready var processor: Processor = $WordProcessor
-@onready var score_counter: Label = $TopBar/score_counter
+@onready var score_counter: Label = $TopBar/ScoreCounter
 @onready var timer: CountdownBar = $TopBar/Timer
 
 
@@ -47,7 +47,7 @@ func set_score(score: int) -> void:
 
 
 func check_word(word: String, score: int) -> void:
-	var result = processor.all.find(word)
+	var result: int = processor.all.find(word)
 	if result == -1:
 		hand.invalid_word()
 	else:  # Correct word

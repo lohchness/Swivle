@@ -5,10 +5,10 @@ signal select_signal(number: int)
 signal deselect_signal(number: int)
 signal is_removed(number: int)
 
-const TOP = 0
-const EDGE = 1
-const SIDE = 2
-const FONT = 3
+const TOP: int = 0
+const EDGE: int = 1
+const SIDE: int = 2
+const FONT: int = 3
 
 const SELECTED_PIXELS: int = 50  # amount of pixels to be raised when selected
 
@@ -24,7 +24,7 @@ var shade_base_position: Vector2
 
 var curr_scale: Vector2
 var base_scale: Vector2
-var zoom_in_scalar = 1.1
+var zoom_in_scalar: float = 1.1
 
 var letter_points: Dictionary[int, Array] = {
 	1: ["E", "A", "I", "O", "N", "R", "T", "L", "S", "U"],
@@ -48,7 +48,7 @@ var colors: Array[Array] = [
 	[Color("ffffff"), Color("404040"), Color("9f9f9f"), Color("847e87")],  # White
 	[Color("ac3232"), Color("721212"), Color("bf263c"), Color("db6c76")],  # Red
 ]
-var shade_color := Color("000000", .5)  # Grayscale with alpha value 133
+var shade_color: Color = Color("000000", .5)  # Grayscale with alpha value 133
 
 @onready var letter: Label = $Letter
 @onready var score: Label = $Score
@@ -73,7 +73,7 @@ func _ready() -> void:
 	score.set("theme_override_colors/font_color", color[FONT])
 
 
-func _physics_process(delta) -> void:
+func _physics_process(delta: float) -> void:
 	if selected:
 		position = lerp(position, base_position - Vector2(0, SELECTED_PIXELS), 25 * delta)
 		# FIXME: Lerps to position slightly above shade_base_position
@@ -102,7 +102,7 @@ func _physics_process(delta) -> void:
 		queue_free()
 
 
-func _on_area_2d_input_event(_viewport, event, _shape_idx) -> void:
+func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	# Prevents from triggering twice in one frames
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		self.on_click()
@@ -151,7 +151,7 @@ func get_score() -> int:
 
 
 func set_score() -> void:
-	for point in letter_points:
+	for point: int in letter_points:
 		if letter.text in letter_points[point]:
 			score.text = str(point)
 

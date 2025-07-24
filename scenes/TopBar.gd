@@ -9,7 +9,7 @@ func _ready() -> void:
 	off_screen = base_position
 
 
-func _process(delta) -> void:
+func _process(delta: float) -> void:
 	position = lerp(position, off_screen, 20 * delta)
 
 

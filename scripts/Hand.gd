@@ -10,18 +10,18 @@ const NUM_KEYS: int = 6
 var keys: Array[Key]
 var selected_keys: Array[int] = []
 
-var x_offset = 25  # Initial position
+var x_offset: int = 25  # Initial position
 var base_position: Vector2
 var off_screen: Vector2  # Offset when game is over
 
-@onready var winsize = get_viewport().size
-@onready var key_scene = preload("res://scenes/key.tscn")
+@onready var winsize: Vector2 = get_viewport().size
+@onready var key_scene: PackedScene = preload("res://scenes/key.tscn")
 
 
 func _ready() -> void:
 	# Initialize 6 Keys in Hand
-	for i in range(NUM_KEYS):
-		var newkey = key_scene.instantiate()
+	for i: int in range(NUM_KEYS):
+		var newkey: Key = key_scene.instantiate()
 		add_child(newkey)
 		keys.append(newkey)
 		# Update hand position (look below)
@@ -35,7 +35,7 @@ func _ready() -> void:
 	off_screen = base_position
 
 
-func _process(delta) -> void:
+func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Pivot"):
 		if can_pivot(selected_keys):
 			pivot(selected_keys[0], selected_keys[1])
@@ -43,12 +43,12 @@ func _process(delta) -> void:
 	if Input.is_action_just_pressed("Submit"):
 		selected_keys.sort()
 		if can_submit(selected_keys):
-			var str = get_hand_string(selected_keys.min(), selected_keys.max())
-			var score = get_score()
+			var str: String = get_hand_string(selected_keys.min(), selected_keys.max())
+			var score: int = get_score()
 			check_words.emit(str, score)
 
 	if Input.is_action_just_pressed("Release"):
-		for i in keys:
+		for i: Key in keys:
 			i.deselect()
 
 	if Input.is_action_just_pressed("ONE"):
@@ -71,11 +71,11 @@ func _process(delta) -> void:
 func valid_word() -> void:
 	# Update Key array
 	var tmpkeys: Array[Key] = []
-	for i in range(len(keys)):
+	for i: int in range(len(keys)):
 		if i not in selected_keys:
 			tmpkeys.append(keys[i])
 
-	for i in selected_keys:
+	for i: int in selected_keys:
 		keys[i].disappear()
 
 	keys = tmpkeys
@@ -86,8 +86,8 @@ func valid_word() -> void:
 
 
 func append_letters(letters: String) -> void:
-	for i in letters:
-		var newkey = key_scene.instantiate()
+	for i: String in letters:
+		var newkey: Key = key_scene.instantiate()
 		add_child(newkey)
 		keys.append(newkey)
 		newkey.position = Vector2(x_offset + winsize.x, winsize.y / 2)
@@ -101,7 +101,7 @@ func append_letters(letters: String) -> void:
 
 # Invalid word
 func invalid_word() -> void:
-	for i in selected_keys:
+	for i: int in selected_keys:
 		keys[i].wiggle()
 
 
@@ -114,39 +114,39 @@ func key_deselect_signal(number: int) -> void:
 
 
 func deselect_all() -> void:
-	for i in keys:
+	for i: Key in keys:
 		i.deselect()
 
 
 func set_hand_string(word: String) -> void:
-	for i in range(len(word)):
+	for i: int in range(len(word)):
 		keys[i].set_letter(word[i])
 
 
 func get_hand_string_all() -> String:
-	var str = ""
-	for i in keys:
+	var str: String = ""
+	for i: Key in keys:
 		str += i.get_letter()
 	return str
 
 
 func get_hand_string(from: int, to: int) -> String:
-	var str = ""
-	for i in range(from, to + 1):
+	var str: String = ""
+	for i: int in range(from, to + 1):
 		str += keys[i].get_letter()
 	return str
 
 
 func pivot(start: int, end: int) -> void:  # Indexes of keys. Start < End. Is 0-indexed.
 	pivoted.emit()
-	var tmp1 = max(start, end)
-	var tmp2 = min(start, end)
+	var tmp1: int = max(start, end)
+	var tmp2: int = min(start, end)
 	start = tmp2
 	end = tmp1
 	assert(len(keys) > end)
 
 	while end - start > 0:
-		var tmp = keys[start]
+		var tmp: Key = keys[start]
 		keys[start] = keys[end]
 		keys[end] = tmp
 		start += 1
@@ -157,7 +157,7 @@ func pivot(start: int, end: int) -> void:  # Indexes of keys. Start < End. Is 0-
 
 
 func update_hand_positions() -> void:
-	for i in range(len(keys)):
+	for i: int in range(len(keys)):
 		keys[i].number = i
 		keys[i].set_base_position(Vector2(x_offset + (i * winsize.x / NUM_KEYS), winsize.y / 2))
 
@@ -168,24 +168,24 @@ func update_hand_numbers() -> void:
 	#keys[i].number = i
 
 
-func is_consecutive(selected_keys) -> bool:
-	for i in range(len(selected_keys) - 1):
+func is_consecutive(selected_keys: Array[int]) -> bool:
+	for i: int in range(len(selected_keys) - 1):
 		if selected_keys[i + 1] - selected_keys[i] != 1:
 			return false
 	return true
 
 
-func can_submit(selected_keys) -> bool:
+func can_submit(selected_keys: Array[int]) -> bool:
 	return len(selected_keys) > 2 and is_consecutive(selected_keys)
 
 
-func can_pivot(selected_keys) -> bool:
+func can_pivot(selected_keys: Array[int]) -> bool:
 	return len(selected_keys) == 2
 
 
 func get_score() -> int:
-	var sum = 0
-	for i in selected_keys:
+	var sum: int = 0
+	for i: int in selected_keys:
 		sum += keys[i].get_score()
 	return sum
 
