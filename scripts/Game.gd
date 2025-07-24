@@ -2,24 +2,23 @@ extends Node2D
 
 enum State {GAMEOVER, PAUSED, MAINMENU, RUNNING}
 
+var game_state: State = State.RUNNING
 var total_score: int = 0
 var text: String = ""
 
-var game_state: State = State.RUNNING
-
 @onready var hand: Hand = $Hand
 @onready var processor: Processor = $WordProcessor
-@onready var scoreCounter: Label = $TopBar/ScoreCounter
+@onready var score_counter: Label = $TopBar/score_counter
 @onready var timer: CountdownBar = $TopBar/Timer
 
 func _ready() -> void:
 	new_game()
 	hand.check_words.connect(Callable(self, "check_word"))
 	hand.pivoted.connect(Callable(self, "moved"))
-	scoreCounter.text = str(total_score)
+	score_counter.text = str(total_score)
 	timer.gameover.connect(Callable(self, "game_over"))
 
-func _process(delta) -> void:
+func _process(_delta: float) -> void:
 	match game_state:
 		State.RUNNING:
 			if Input.is_action_just_pressed("DEBUG_END"):
@@ -35,11 +34,11 @@ func new_game() -> void:
 
 func add_score(score : int) -> void:
 	total_score += score
-	scoreCounter.text = str(total_score)
+	score_counter.text = str(total_score)
 
 func set_score(score : int) -> void:
 	total_score = score
-	scoreCounter.text = str(total_score)
+	score_counter.text = str(total_score)
 
 func check_word(word : String, score : int) -> void:
 	var result = processor.all.find(word)

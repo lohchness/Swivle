@@ -1,14 +1,15 @@
-extends Node2D
 class_name Processor
+extends Node2D
 
-@onready var filtered_words = "res://assets/filtered.txt"
+const NUM_KEYS = 6
+
 var all : Array[String]
 var threes : Array[String]
 var fours : Array[String]
 var fives : Array[String]
 var sixes : Array[String]
 
-const NUM_KEYS = 6
+@onready var filtered_words = "res://assets/filtered.txt"
 
 func _ready():
 	load_file()
@@ -35,7 +36,7 @@ func get_next_string(letters):
 	var remaining_letters: int = NUM_KEYS - len(letters)
 	var chosen: String = ""
 	var another: String = ""
-	
+
 	if len(letters) == 0:
 		chosen = all.pick_random()
 		print("Chosen (no letters): " + chosen)
@@ -53,24 +54,24 @@ func get_next_string(letters):
 			print("Chosen Random Word (shared letter): " + word)
 			chosen = string_difference(letters, word)
 			print("Chosen Word After Diff: " + chosen)
-			
-	
+
+
 	var rest: int = remaining_letters - len(chosen)
 	var rest_str: String = ""
 	if rest > 0: # Still letters remaining
 		print(str(rest) + " letters remaining!.")
 		another = all.pick_random()
 		print("Picked: " + another)
-		
+
 		rest_str = pick_random_n(another, rest)
 		print(": " + rest_str)
-	
+
 	print(letters + " + " + chosen + " + " + rest_str)
-	
+
 	chosen = shuffle_string(chosen)
 	print_debug(letters + chosen + rest_str)
 	assert(len(letters + chosen + rest_str) == NUM_KEYS)
-	
+
 	return chosen + rest_str
 
 func any(letters : String, word : String):
@@ -88,7 +89,7 @@ func string_difference(word1 : String, word2 : String) -> String:
 		else:
 			pass
 	return newstr
-	
+
 func pick_random_n(word : String, n : int):
 	var newstr: String = ""
 	for i in range(n):
