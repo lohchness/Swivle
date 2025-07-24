@@ -13,3 +13,7 @@ func _process(delta):
 func game_over():
 	off_screen = base_position - Vector2(0, 500)
 	$Timer.game_over()
+
+func new_game():
+	off_screen = base_position
+	$Timer.new_game()

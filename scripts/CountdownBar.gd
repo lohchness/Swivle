@@ -5,15 +5,15 @@ extends Sprite2D
 var percentage : float = 1.0
 var target_percentage : float
 
-const original_rate = 12
+const original_rate = 10 # 12
 var curr_rate
 
 var thresh_1 = .10
 var thresh_1_rate = 3
 var thresh_2 = .25
-var thresh_2_rate = 7
+var thresh_2_rate = 5 # 7
 var thresh_3 = .35
-var thresh_3_rate = 10
+var thresh_3_rate = 8 # 10
 
 var add_progress : float = .2
 
@@ -27,7 +27,7 @@ func _process(delta):
 	percentage -= curr_rate * delta / 100
 	
 	# Percentage
-	if (percentage < 0) or Input.is_action_just_pressed("DEBUG_END"):
+	if (percentage < 0):
 		percentage = 0
 		gameover.emit()
 	if (percentage > 1):
@@ -64,3 +64,17 @@ func game_over():
 	curr_rate = 0
 	set_process(false)
 	
+func new_game():
+	curr_rate = original_rate
+	percentage = 1.0
+	target_percentage = percentage
+	set_process(true)
+
+func pause():
+	curr_rate = 0
+	set_process(false)
+
+func unpause():
+	curr_rate = original_rate
+	set_process(true)
+	update_rate()

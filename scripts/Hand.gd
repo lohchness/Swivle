@@ -3,7 +3,7 @@ extends Node2D
 var keys : Array[Key]
 const key = preload("res://scenes/key.tscn")
 @onready var winsize = get_viewport().size
-var x_offset = 25
+var x_offset = 25 # Initial position
 
 signal key_selected(index: int)
 signal check_words(word : String, score : int)
@@ -107,6 +107,10 @@ func key_deselect_signal(number : int):
 	selected_keys.erase(number)
 	pass
 
+func deselect_all():
+	for i in keys:
+		i.deselect()
+
 func set_hand_string(word : String):
 	for i in range(len(word)):
 		keys[i].set_letter(word[i])
@@ -143,11 +147,13 @@ func pivot(start : int, end : int): # Indexes of keys. Start < End. Is 0-indexed
 
 func update_hand_positions():
 	for i in range(len(keys)):
+		keys[i].number = i
 		keys[i].set_base_position(Vector2(x_offset + (i * winsize.x / NUM_KEYS), winsize.y / 2))
 
 func update_hand_numbers():
-	for i in range(len(keys)):
-		keys[i].number = i
+	pass
+	#for i in range(len(keys)):
+		#keys[i].number = i
 
 func is_consecutive(selected_keys):
 	for i in range(len(selected_keys) - 1):
@@ -173,3 +179,6 @@ func game_over():
 	
 	#for key in keys:
 		#key.set_physics_process(false)
+
+func new_game():
+	off_screen = base_position
