@@ -3,17 +3,19 @@ extends Node2D
 
 const NUM_KEYS = 6
 
-var all : Array[String]
-var threes : Array[String]
-var fours : Array[String]
-var fives : Array[String]
-var sixes : Array[String]
+var all: Array[String]
+var threes: Array[String]
+var fours: Array[String]
+var fives: Array[String]
+var sixes: Array[String]
 
 @onready var filtered_words = "res://assets/filtered.txt"
+
 
 func _ready():
 	load_file()
 	randomize()
+
 
 func load_file():
 	var f: FileAccess = FileAccess.open(filtered_words, FileAccess.READ)
@@ -30,6 +32,7 @@ func load_file():
 			6:
 				sixes.append(line)
 	f.close()
+
 
 func get_next_string(letters):
 	print("-----------------------")
@@ -55,10 +58,9 @@ func get_next_string(letters):
 			chosen = string_difference(letters, word)
 			print("Chosen Word After Diff: " + chosen)
 
-
 	var rest: int = remaining_letters - len(chosen)
 	var rest_str: String = ""
-	if rest > 0: # Still letters remaining
+	if rest > 0:  # Still letters remaining
 		print(str(rest) + " letters remaining!.")
 		another = all.pick_random()
 		print("Picked: " + another)
@@ -74,13 +76,15 @@ func get_next_string(letters):
 
 	return chosen + rest_str
 
-func any(letters : String, word : String):
+
+func any(letters: String, word: String):
 	for i in letters:
 		if i in word:
 			return true
 	return false
 
-func string_difference(word1 : String, word2 : String) -> String:
+
+func string_difference(word1: String, word2: String) -> String:
 	# TODO : There may be more than one occurence, change it so that it only does it N times
 	var newstr: String = ""
 	for i in word2:
@@ -90,14 +94,17 @@ func string_difference(word1 : String, word2 : String) -> String:
 			pass
 	return newstr
 
-func pick_random_n(word : String, n : int):
+
+func pick_random_n(word: String, n: int):
 	var newstr: String = ""
 	for i in range(n):
 		newstr += word[randi_range(0, len(word) - 1)]
 	return newstr
 
+
 func shuffle_string(s):
 	var a: Array[String] = []
-	for c in s: a.append(c)
+	for c in s:
+		a.append(c)
 	a.shuffle()
 	return "".join(a)

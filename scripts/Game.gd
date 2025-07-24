@@ -1,6 +1,6 @@
 extends Node2D
 
-enum State {GAMEOVER, PAUSED, MAINMENU, RUNNING}
+enum State { GAMEOVER, PAUSED, MAINMENU, RUNNING }
 
 var game_state: State = State.RUNNING
 var total_score: int = 0
@@ -11,12 +11,14 @@ var text: String = ""
 @onready var score_counter: Label = $TopBar/score_counter
 @onready var timer: CountdownBar = $TopBar/Timer
 
+
 func _ready() -> void:
 	new_game()
 	hand.check_words.connect(Callable(self, "check_word"))
 	hand.pivoted.connect(Callable(self, "moved"))
 	score_counter.text = str(total_score)
 	timer.gameover.connect(Callable(self, "game_over"))
+
 
 func _process(_delta: float) -> void:
 	match game_state:
@@ -27,34 +29,40 @@ func _process(_delta: float) -> void:
 			if Input.is_action_just_pressed("DEBUG_END"):
 				restart()
 
+
 func new_game() -> void:
 	text = processor.get_next_string("")
 	hand.set_hand_string(text)
 	set_score(0)
 
-func add_score(score : int) -> void:
+
+func add_score(score: int) -> void:
 	total_score += score
 	score_counter.text = str(total_score)
 
-func set_score(score : int) -> void:
+
+func set_score(score: int) -> void:
 	total_score = score
 	score_counter.text = str(total_score)
 
-func check_word(word : String, score : int) -> void:
+
+func check_word(word: String, score: int) -> void:
 	var result = processor.all.find(word)
 	if result == -1:
 		hand.invalid_word()
-	else: # Correct word
+	else:  # Correct word
 		hand.valid_word()
 		add_score(score)
 		hand.append_letters(processor.get_next_string(hand.get_hand_string_all()))
 
 		timer.add_time(len(word))
 
+
 func game_over() -> void:
 	game_state = State.GAMEOVER
 	hand.game_over()
 	$TopBar.game_over()
+
 
 func restart() -> void:
 	game_state = State.RUNNING
