@@ -1,11 +1,12 @@
 extends Node2D
+class_name Processor
 
 @onready var filtered_words = "res://assets/filtered.txt"
-var all : Array
-var threes : Array
-var fours : Array
-var fives : Array
-var sixes : Array
+var all : Array[String]
+var threes : Array[String]
+var fours : Array[String]
+var fives : Array[String]
+var sixes : Array[String]
 
 const NUM_KEYS = 6
 
@@ -14,9 +15,9 @@ func _ready():
 	randomize()
 
 func load_file():
-	var f = FileAccess.open(filtered_words, FileAccess.READ)
+	var f: FileAccess = FileAccess.open(filtered_words, FileAccess.READ)
 	while not f.eof_reached():
-		var line = f.get_line().strip_edges()
+		var line: String = f.get_line().strip_edges()
 		all.append(line)
 		match len(line):
 			3:
@@ -31,16 +32,16 @@ func load_file():
 
 func get_next_string(letters):
 	print("-----------------------")
-	var remaining_letters = NUM_KEYS - len(letters)
-	var chosen : String = ""
-	var another : String = ""
+	var remaining_letters: int = NUM_KEYS - len(letters)
+	var chosen: String = ""
+	var another: String = ""
 	
 	if len(letters) == 0:
 		chosen = all.pick_random()
 		print("Chosen (no letters): " + chosen)
 	else:
 		print(str(remaining_letters) + " letters remaining! Choosing a word.")
-		var filtered = all.filter(func(x): return len(x) <= remaining_letters)
+		var filtered: Array[String] = all.filter(func(x): return len(x) <= remaining_letters)
 		if randi_range(0, 1):
 			# Random word
 			chosen = filtered.pick_random()
@@ -54,14 +55,15 @@ func get_next_string(letters):
 			print("Chosen Word After Diff: " + chosen)
 			
 	
-	var rest = remaining_letters - len(chosen)
-	var rest_str = ""
+	var rest: int = remaining_letters - len(chosen)
+	var rest_str: String = ""
 	if rest > 0: # Still letters remaining
-		print(str(rest) + " letters remaining! Choosing another word.")
+		print(str(rest) + " letters remaining!.")
 		another = all.pick_random()
+		print("Picked: " + another)
+		
 		rest_str = pick_random_n(another, rest)
-		print("Another: " + another)
-		print("Randomized letters chosen from Another: " + rest_str)
+		print(": " + rest_str)
 	
 	print(letters + " + " + chosen + " + " + rest_str)
 	
@@ -79,7 +81,7 @@ func any(letters : String, word : String):
 
 func string_difference(word1 : String, word2 : String) -> String:
 	# TODO : There may be more than one occurence, change it so that it only does it N times
-	var newstr = ""
+	var newstr: String = ""
 	for i in word2:
 		if i not in word1:
 			newstr += i
@@ -88,13 +90,13 @@ func string_difference(word1 : String, word2 : String) -> String:
 	return newstr
 	
 func pick_random_n(word : String, n : int):
-	var newstr = ""
+	var newstr: String = ""
 	for i in range(n):
 		newstr += word[randi_range(0, len(word) - 1)]
 	return newstr
 
 func shuffle_string(s):
-	var a = []
+	var a: Array[String] = []
 	for c in s: a.append(c)
 	a.shuffle()
 	return "".join(a)

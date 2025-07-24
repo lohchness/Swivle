@@ -1,22 +1,23 @@
 extends Node2D
+class_name Hand
 
-var keys : Array[Key]
 const key = preload("res://scenes/key.tscn")
 @onready var winsize = get_viewport().size
-var x_offset = 25 # Initial position
 
 signal key_selected(index: int)
-signal check_words(word : String, score : int)
+signal check_words(word: String, score: int)
 signal pivoted
 
-var selected_keys = []
+var x_offset = 25 # Initial position
 
-const NUM_KEYS = 6
+const NUM_KEYS: int = 6
+var keys: Array[Key]
+var selected_keys: Array[int] = []
 
-var base_position
-var off_screen
+var base_position: Vector2
+var off_screen: Vector2 # Offset when game is over
 
-func _ready():
+func _ready() -> void:
 	# Initialize 6 Keys in Hand
 	for i in range(NUM_KEYS):
 		var newkey = key.instantiate()
@@ -33,16 +34,18 @@ func _ready():
 	off_screen = base_position
 
 
-func _process(delta):	
+func _process(delta) -> void:
 	if Input.is_action_just_pressed("Pivot"):
 		if can_pivot(selected_keys):
 			pivot(selected_keys[0], selected_keys[1])
+
 	if Input.is_action_just_pressed("Submit"):
 		selected_keys.sort()
 		if can_submit(selected_keys):
 			var str = get_hand_string(selected_keys.min(), selected_keys.max())
 			var score = get_score()
 			check_words.emit(str, score)
+
 	if Input.is_action_just_pressed("Release"):
 		for i in keys:
 			i.deselect()
@@ -62,12 +65,10 @@ func _process(delta):
 	
 	position = lerp(position, off_screen, 20 * delta)
 
-
-
 # Remove selected keys from game and generate new ones at the tail.
-func valid_word():
+func valid_word() -> void:
 	# Update Key array
-	var tmpkeys : Array[Key] = []
+	var tmpkeys: Array[Key] = []
 	for i in range(len(keys)): 
 		if i not in selected_keys:
 			tmpkeys.append(keys[i])
@@ -81,7 +82,7 @@ func valid_word():
 
 	selected_keys = []
 
-func append_letters(letters : String):
+func append_letters(letters : String) -> void:
 	for i in letters:
 		var newkey = key.instantiate()
 		add_child(newkey)
@@ -95,23 +96,21 @@ func append_letters(letters : String):
 	update_hand_positions()
 
 # Invalid word
-func invalid_word():
+func invalid_word() -> void:
 	for i in selected_keys:
 		keys[i].wiggle()
 
-func key_select_signal(number : int):
+func key_select_signal(number: int) -> void:
 	selected_keys.append(number)
-	pass
 
-func key_deselect_signal(number : int):
+func key_deselect_signal(number: int) -> void:
 	selected_keys.erase(number)
-	pass
 
-func deselect_all():
+func deselect_all() -> void:
 	for i in keys:
 		i.deselect()
 
-func set_hand_string(word : String):
+func set_hand_string(word: String) -> void:
 	for i in range(len(word)):
 		keys[i].set_letter(word[i])
 
@@ -121,13 +120,13 @@ func get_hand_string_all() -> String:
 		str += i.get_letter()
 	return str
 
-func get_hand_string(from : int, to : int) -> String:
+func get_hand_string(from: int, to: int) -> String:
 	var str = ""
 	for i in range(from, to + 1):
 		str += keys[i].get_letter()
 	return str
 
-func pivot(start : int, end : int): # Indexes of keys. Start < End. Is 0-indexed.
+func pivot(start: int, end: int) -> void: # Indexes of keys. Start < End. Is 0-indexed.
 	pivoted.emit()
 	var tmp1 = max(start, end)
 	var tmp2 = min(start, end)
@@ -145,17 +144,17 @@ func pivot(start : int, end : int): # Indexes of keys. Start < End. Is 0-indexed
 	update_hand_positions()
 	update_hand_numbers()
 
-func update_hand_positions():
+func update_hand_positions() -> void:
 	for i in range(len(keys)):
 		keys[i].number = i
 		keys[i].set_base_position(Vector2(x_offset + (i * winsize.x / NUM_KEYS), winsize.y / 2))
 
-func update_hand_numbers():
+func update_hand_numbers() -> void:
 	pass
 	#for i in range(len(keys)):
 		#keys[i].number = i
 
-func is_consecutive(selected_keys):
+func is_consecutive(selected_keys) -> bool:
 	for i in range(len(selected_keys) - 1):
 		if selected_keys[i + 1] - selected_keys[i] != 1:
 			return false
@@ -164,7 +163,7 @@ func is_consecutive(selected_keys):
 func can_submit(selected_keys) -> bool:
 	return len(selected_keys) > 2 and is_consecutive(selected_keys)
 
-func can_pivot(selected_keys):
+func can_pivot(selected_keys) -> bool:
 	return len(selected_keys) == 2
 
 func get_score() -> int:
@@ -173,12 +172,12 @@ func get_score() -> int:
 		sum += keys[i].get_score()
 	return sum
 
-func game_over():
+func game_over() -> void:
 	#set_process(false)
 	off_screen = base_position - Vector2(0, 500)
 	
 	#for key in keys:
 		#key.set_physics_process(false)
 
-func new_game():
+func new_game() -> void:
 	off_screen = base_position

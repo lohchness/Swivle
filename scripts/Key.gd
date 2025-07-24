@@ -1,20 +1,20 @@
 extends Node2D
 class_name Key
 
-@onready var letter = $Letter
-@onready var score = $Score
-@onready var area = $Area2D
-@onready var collision = $Area2D/CollisionShape2D
+@onready var letter: Label = $Letter
+@onready var score: Label = $Score
+@onready var area: Area2D = $Area2D
+@onready var collision: CollisionShape2D = $Area2D/CollisionShape2D
 
-signal select_signal(number : int)
-signal deselect_signal(number : int)
-signal is_removed(number : int)
+signal select_signal(number: int)
+signal deselect_signal(number: int)
+signal is_removed(number: int)
 
 const TOP = 0
 const EDGE = 1
 const SIDE = 2
 const FONT = 3
-var colors = [
+var colors: Array[Array] = [
 	# top color,      edge color,      side color,      font color
 	[Color("d9a066"), Color("ebc4af"), Color("8f563b"), Color("402b21")], # Brown
 	[Color("ef5b5f"), Color("f69baf"), Color("ca3a59"), Color("ffdee5")], # Pink
@@ -26,9 +26,9 @@ var colors = [
 	[Color("ffffff"), Color("404040"), Color("9f9f9f"), Color("847e87")], # White
 	[Color("ac3232"), Color("721212"), Color("bf263c"), Color("db6c76")], # Red
 ]
-var shade_color = Color("000000", .5) # Grayscale with alpha value 133
+var shade_color := Color("000000", .5) # Grayscale with alpha value 133
 
-var letter_points = {
+var letter_points: Dictionary[int, Array] = {
 	1 : ["E", "A", "I", "O", "N", "R", "T", "L", "S", "U"],
 	2 : ["D", "G"],
 	3 : ["B", "C", "M", "P"],
@@ -38,22 +38,22 @@ var letter_points = {
 	10 : ["Q", "Z"]
 }
 
-var max_tilt : float = 0.15
-var curr_tilt : float = 0
+var max_tilt: float = 0.15
+var curr_tilt: float = 0
 
-var number : int = 0
-var selected = false
-const SELECTED_PIXELS = 50 # amount of pixels to be raised when selected
+var number: int = 0
+var selected: bool = false
+const SELECTED_PIXELS: int = 50 # amount of pixels to be raised when selected
 
 var target_opacity : int
-var base_position
-var shade_base_position
+var base_position: Vector2
+var shade_base_position: Vector2
 
-var curr_scale
-var base_scale
+var curr_scale: Vector2
+var base_scale: Vector2
 var zoom_in_scalar = 1.1
 
-func _ready():
+func _ready() -> void:
 	base_position = position
 	shade_base_position = $keySprites/Shade.position
 	target_opacity = modulate.a8
@@ -61,27 +61,25 @@ func _ready():
 	curr_scale = base_scale
 	
 	# Choose a colour
-	var color = colors.pick_random()
+	var color: Array = colors.pick_random()
 	$keySprites/Top.modulate = color[TOP]
 	$keySprites/Edge.modulate = color[EDGE]
 	$keySprites/Side.modulate = color[SIDE]
 	$keySprites/Shade.modulate = shade_color
 	letter.set("theme_override_colors/font_color", color[FONT])
 	score.set("theme_override_colors/font_color", color[FONT])
-	
-	pass
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if selected:
 		position = lerp(position, base_position - Vector2(0, SELECTED_PIXELS), 25 * delta)
-		# hacky fix, whatever
+		# FIXME: Lerps to position slightly above shade_base_position
 		$keySprites/Shade.position = lerp($keySprites/Shade.position, shade_base_position + Vector2(0, 20), 25 * delta) 
 	else:
 		position = lerp(position, base_position, 25 * delta)
 		$keySprites/Shade.position = lerp($keySprites/Shade.position, shade_base_position, 25 * delta)
 
 	# Hover on mouse wiggle
-	for i : Sprite2D in $keySprites.get_children():
+	for i: Sprite2D in $keySprites.get_children():
 		i.rotation = curr_tilt
 	$Letter.rotation = curr_tilt
 	$Score.rotation = curr_tilt * 2
@@ -90,75 +88,71 @@ func _physics_process(delta):
 	# TODO : Scale from center
 	#scale = lerp(scale, curr_scale, 50 * delta)
 	
-	# Disappear on submit
+	# Disappear and free on submit
 	modulate.a8 = lerp(modulate.a8, target_opacity, 25 * delta) 
 	if (modulate.a8 == 0):
 		queue_free()
 
-func _on_area_2d_input_event(viewport, event, shape_idx):
+func _on_area_2d_input_event(viewport, event, shape_idx) -> void:
 	# Prevents from triggering twice in one frames
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		self.on_click()
 
-func set_base_position(p : Vector2):
-	base_position = p
+func _on_area_2d_mouse_entered() -> void:
+	wiggle()
+	zoom_in()
 
-func on_click():
+func _on_area_2d_mouse_exited() -> void:
+	zoom_out()
+
+func on_click() -> void:
 	if !selected:
 		select()
 	else:
 		deselect()
 
-## GETTERS AND SETTERS ##
+## HELPERS, GETTERS, SETTERS 
+
+func select() -> void:
+	select_signal.emit(number)
+	selected = true
+
+func deselect() -> void:
+	deselect_signal.emit(number)
+	selected = false
 
 func get_letter() -> String:
 	return letter.text
 
 func set_letter(l : String) -> void:
-	#assert(len(l) == 1)
 	letter.text = l
 	set_score()
 
-func get_score():
+func get_score() -> int:
 	return int(score.text)
 
-func set_score():
+func set_score() -> void:
 	for point in letter_points:
 		if letter.text in letter_points[point]:
 			score.text = str(point)
 
-func select():
-	select_signal.emit(number)
-	selected = true
+func set_base_position(p : Vector2) -> void:
+	base_position = p
 
-func deselect():
-	deselect_signal.emit(number)
-	selected = false
-
-func set_number(i : int):
+func set_number(i: int) -> void:
 	number = i
 
-func get_number():
+func get_number() -> int:
 	return number
 
-func disappear():
+func disappear() -> void:
 	target_opacity = 0
-	pass
 
-func _on_area_2d_mouse_entered():
-	wiggle()
-	zoom_in()
-
-
-func wiggle():
+func wiggle() -> void:
 	curr_tilt = max_tilt
 
-
-func zoom_in():
+func zoom_in() -> void:
 	curr_scale = base_scale * zoom_in_scalar
 
-func zoom_out():
+func zoom_out() -> void:
 	curr_scale = base_scale
-
-func _on_area_2d_mouse_exited():
-	zoom_out()

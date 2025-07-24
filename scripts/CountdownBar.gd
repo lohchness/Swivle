@@ -1,31 +1,32 @@
+class_name CountdownBar
 extends Sprite2D
 
-@onready var bar = $TimerBar
+signal gameover
+
+const START_RATE: int = 10
+var curr_rate: int
 
 var percentage : float = 1.0
 var target_percentage : float
 
-const original_rate = 10 # 12
-var curr_rate
+var thresh_1: float = .10
+var thresh_1_rate: float = 3
+var thresh_2: float = .25
+var thresh_2_rate: float = 5 # 7
+var thresh_3: float = .35
+var thresh_3_rate: float = 8 # 10
 
-var thresh_1 = .10
-var thresh_1_rate = 3
-var thresh_2 = .25
-var thresh_2_rate = 5 # 7
-var thresh_3 = .35
-var thresh_3_rate = 8 # 10
+var add_progress: float = .2
 
-var add_progress : float = .2
+@onready var bar: Sprite2D = $TimerBar
 
-signal gameover
-
-func _ready():
-	curr_rate = original_rate
+func _ready() -> void:
+	curr_rate = START_RATE
 	target_percentage = percentage
 
-func _process(delta):
+func _process(delta) -> void:
 	percentage -= curr_rate * delta / 100
-	
+
 	# Percentage
 	if (percentage < 0):
 		percentage = 0
@@ -34,12 +35,12 @@ func _process(delta):
 		percentage = 1
 
 	update_rate()
-	
+
 	target_percentage = lerp(target_percentage, percentage, 25 * delta)
 	bar.set_scale(Vector2(target_percentage, 1))
 	#bar.set_scale(Vector2(percentage, 1))
 
-func update_rate():
+func update_rate() -> void:
 	# Rate
 	if (percentage < thresh_1 && curr_rate > thresh_1_rate):
 		change_rate(thresh_1_rate)
@@ -47,34 +48,34 @@ func update_rate():
 		change_rate(thresh_2_rate)
 	if (percentage < thresh_3 && curr_rate > thresh_3_rate):
 		change_rate(thresh_3_rate)
-	
-	# Original rate
-	if (percentage > thresh_3 && curr_rate < original_rate):
-		change_rate(original_rate)
 
-func add_time(num_letters):
+	# Original rate
+	if (percentage > thresh_3 && curr_rate < START_RATE):
+		change_rate(START_RATE)
+
+func add_time(num_letters) -> void:
 	percentage += add_progress * num_letters
-	
+
 	update_rate()
-	
-func change_rate(to):
+
+func change_rate(to) -> void:
 	curr_rate = to
 
-func game_over():
+func game_over() -> void:
 	curr_rate = 0
 	set_process(false)
-	
-func new_game():
-	curr_rate = original_rate
+
+func new_game() -> void:
+	curr_rate = START_RATE
 	percentage = 1.0
 	target_percentage = percentage
 	set_process(true)
 
-func pause():
+func pause() -> void:
 	curr_rate = 0
 	set_process(false)
 
-func unpause():
-	curr_rate = original_rate
+func unpause() -> void:
+	curr_rate = START_RATE
 	set_process(true)
 	update_rate()
