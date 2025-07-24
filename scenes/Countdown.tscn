@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ctau5r7efkgkr"]
 
 [ext_resource type="Texture2D" uid="uid://chx5g54yxicw1" path="res://assets/countdown_bar.png" id="1_s46u6"]
-[ext_resource type="Script" path="res://scripts/CountdownBar.gd" id="2_bfgoa"]
+[ext_resource type="Script" uid="uid://cj6wwmmhjj5to" path="res://scripts/CountdownBar.gd" id="2_bfgoa"]
 [ext_resource type="Texture2D" uid="uid://btdqw5b01idpg" path="res://assets/timer_bar.png" id="3_cjswf"]
 [ext_resource type="Texture2D" uid="uid://bk3lkvrwwgf2r" path="res://assets/timer_frame.png" id="4_88mai"]
 

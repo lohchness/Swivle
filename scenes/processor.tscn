@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dwr7ox45xkroh"]
 
-[ext_resource type="Script" path="res://scripts/Processor.gd" id="1_nynih"]
+[ext_resource type="Script" uid="uid://74s2ynqt105h" path="res://scripts/Processor.gd" id="1_nynih"]
 
 [node name="WordProcessor" type="Node2D"]
 script = ExtResource("1_nynih")
