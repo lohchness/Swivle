@@ -35,7 +35,7 @@ func _ready() -> void:
 	off_screen = base_position
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Pivot"):
 		if can_pivot(selected_keys):
 			pivot(selected_keys[0], selected_keys[1])
@@ -191,7 +191,7 @@ func get_score() -> int:
 
 
 func game_over() -> void:
-	#set_process(false)
+	#set_physics_process(false)
 	off_screen = base_position - Vector2(0, 500)
 
 	#for key in keys:

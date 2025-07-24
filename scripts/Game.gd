@@ -20,7 +20,7 @@ func _ready() -> void:
 	timer.gameover.connect(Callable(self, "game_over"))
 
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	match game_state:
 		State.RUNNING:
 			if Input.is_action_just_pressed("DEBUG_END"):

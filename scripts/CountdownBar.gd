@@ -26,7 +26,7 @@ func _ready() -> void:
 	target_percentage = percentage
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	percentage -= curr_rate * delta / 100
 
 	# Percentage
@@ -69,22 +69,22 @@ func change_rate(to: int) -> void:
 
 func game_over() -> void:
 	curr_rate = 0
-	set_process(false)
+	set_physics_process(false)
 
 
 func new_game() -> void:
 	curr_rate = START_RATE
 	percentage = 1.0
 	target_percentage = percentage
-	set_process(true)
+	set_physics_process(true)
 
 
 func pause() -> void:
 	curr_rate = 0
-	set_process(false)
+	set_physics_process(false)
 
 
 func unpause() -> void:
 	curr_rate = START_RATE
-	set_process(true)
+	set_physics_process(true)
 	update_rate()
