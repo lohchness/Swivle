@@ -16,12 +16,15 @@ const SIDE = 2
 const FONT = 3
 var colors = [
 	# top color,      edge color,      side color,      font color
-	[Color("d9a066"), Color("ebc4af"), Color("8f563b"), Color("402b21")],
-	[Color("ef5b5f"), Color("f69baf"), Color("ca3a59"), Color("ffdee5")],
-	[Color("8fde5e"), Color("c6fe56"), Color("5bb84c"), Color("edecf2")],
-	[Color("597dce"), Color("080912"), Color("30346d"), Color("6dc2ca")],
-	[Color("f3792c"), Color("fabe54"), Color("b0362d"), Color("faebc8")],
-	[Color("72a3a7"), Color("1e2a4a"), Color("405a73"), Color("1e2a4a")]
+	[Color("d9a066"), Color("ebc4af"), Color("8f563b"), Color("402b21")], # Brown
+	[Color("ef5b5f"), Color("f69baf"), Color("ca3a59"), Color("ffdee5")], # Pink
+	[Color("8fde5e"), Color("c6fe56"), Color("5bb84c"), Color("edecf2")], # Green
+	[Color("597dce"), Color("080912"), Color("30346d"), Color("6dc2ca")], # Light Blue
+	[Color("f3792c"), Color("fabe54"), Color("b0362d"), Color("faebc8")], # Orange
+	[Color("72a3a7"), Color("1e2a4a"), Color("405a73"), Color("1e2a4a")], # Gray Blue
+	[Color("d77bba"), Color("3c0452"), Color("8d2ba4"), Color("a211c4")], # Purple
+	[Color("ffffff"), Color("404040"), Color("9f9f9f"), Color("847e87")], # White
+	[Color("ac3232"), Color("721212"), Color("bf263c"), Color("db6c76")], # Red
 ]
 var shade_color = Color("000000", .5) # Grayscale with alpha value 133
 
