@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c0pf0xo0db3ml" path="res://scenes/hand.tscn" id="3_ep3bm"]
 [ext_resource type="Texture2D" uid="uid://diixlb0omic6u" path="res://assets/Wall.png" id="4_2mllk"]
 [ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="4_wd400"]
-[ext_resource type="Script" uid="uid://bmus7epm4fbt6" path="res://scenes/TopBar.gd" id="7_u6xxe"]
+[ext_resource type="Script" uid="uid://bmus7epm4fbt6" path="res://scripts/TopBar.gd" id="7_u6xxe"]
 [ext_resource type="Texture2D" uid="uid://dqrj0xaa6v7kg" path="res://assets/small_window.png" id="8_nk5xq"]
 [ext_resource type="Texture2D" uid="uid://iibm3h362gtv" path="res://assets/menu_burger.png" id="9_s58x2"]
 [ext_resource type="PackedScene" uid="uid://ctau5r7efkgkr" path="res://scenes/Countdown.tscn" id="9_yiqp2"]
@@ -97,6 +97,7 @@ region_rect = Rect2(0, 0, 1200, 700)
 script = ExtResource("7_u6xxe")
 
 [node name="MenuWindow" type="Sprite2D" parent="TopBar"]
+visible = false
 texture_filter = 1
 position = Vector2(188, 116)
 texture = ExtResource("8_nk5xq")
