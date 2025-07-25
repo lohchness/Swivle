@@ -6,11 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://k60b7mpnl7pw" path="res://assets/Corner.png" id="3_8qebx"]
 [ext_resource type="PackedScene" uid="uid://c0pf0xo0db3ml" path="res://scenes/hand.tscn" id="3_ep3bm"]
 [ext_resource type="Texture2D" uid="uid://diixlb0omic6u" path="res://assets/Wall.png" id="4_2mllk"]
-[ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="4_wd400"]
 [ext_resource type="Script" uid="uid://bmus7epm4fbt6" path="res://scripts/TopBar.gd" id="7_u6xxe"]
 [ext_resource type="Texture2D" uid="uid://dqrj0xaa6v7kg" path="res://assets/small_window.png" id="8_nk5xq"]
 [ext_resource type="Texture2D" uid="uid://iibm3h362gtv" path="res://assets/menu_burger.png" id="9_s58x2"]
 [ext_resource type="PackedScene" uid="uid://ctau5r7efkgkr" path="res://scenes/Countdown.tscn" id="9_yiqp2"]
+[ext_resource type="PackedScene" uid="uid://dbg1ecfoostfo" path="res://scenes/score_window.tscn" id="10_3xj3m"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_d0sg0")
@@ -105,21 +105,8 @@ texture = ExtResource("8_nk5xq")
 [node name="Sprite2D" type="Sprite2D" parent="TopBar/MenuWindow"]
 texture = ExtResource("9_s58x2")
 
-[node name="ScoreWindow" type="Sprite2D" parent="TopBar"]
-texture_filter = 1
-position = Vector2(954, 116)
-texture = ExtResource("8_nk5xq")
-
-[node name="ScoreCounter" type="Label" parent="TopBar"]
-texture_filter = 1
-offset_left = 813.0
-offset_top = 85.0
-offset_right = 1016.0
-offset_bottom = 146.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_wd400")
-theme_override_font_sizes/font_size = 65
-horizontal_alignment = 2
+[node name="ScoreWindow" parent="TopBar" instance=ExtResource("10_3xj3m")]
+position = Vector2(949, 116)
 
 [node name="Timer" parent="TopBar" instance=ExtResource("9_yiqp2")]
 position = Vector2(565, 116)

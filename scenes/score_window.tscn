@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbg1ecfoostfo"]
+
+[ext_resource type="Texture2D" uid="uid://dqrj0xaa6v7kg" path="res://assets/small_window.png" id="1_1il1n"]
+[ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="2_3ga76"]
+
+[node name="ScoreWindow" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_1il1n")
+
+[node name="ScoreCounter" type="Label" parent="."]
+texture_filter = 1
+offset_left = -58.0
+offset_top = -31.0
+offset_right = 58.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_3ga76")
+theme_override_font_sizes/font_size = 65
+horizontal_alignment = 2
+clip_text = true

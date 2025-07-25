@@ -8,7 +8,7 @@ var text: String = ""
 
 @onready var hand: Hand = $Hand
 @onready var processor: Processor = $WordProcessor
-@onready var score_counter: Label = $TopBar/ScoreCounter
+@onready var score_counter: Label = $TopBar/ScoreWindow/ScoreCounter
 @onready var timer: CountdownBar = $TopBar/Timer
 
 
