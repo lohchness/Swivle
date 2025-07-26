@@ -24,8 +24,14 @@ func _ready() -> void:
 		var newkey: Key = key_scene.instantiate()
 		add_child(newkey)
 		keys.append(newkey)
+
 		# Update hand position (look below)
-		newkey.set_base_position(Vector2(x_offset + (i * winsize.x / NUM_KEYS), winsize.y / 2))
+		var initial_position: Vector2 = Vector2(
+			x_offset + (i * winsize.x / NUM_KEYS), winsize.y / 2
+		)
+		newkey.set_base_position(initial_position)
+		newkey.position = initial_position  # Initialize position at game start
+
 		newkey.set_letter(str(i))
 		newkey.set_number(i)
 		newkey.select_signal.connect(Callable(self, "key_select_signal"))
