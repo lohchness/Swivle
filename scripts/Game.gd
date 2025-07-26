@@ -10,6 +10,7 @@ var text: String = ""
 @onready var processor: Processor = $WordProcessor
 @onready var score_counter: Label = $TopBar/ScoreWindow/ScoreCounter
 @onready var timer: CountdownBar = $TopBar/Timer
+@onready var restart_key: RestartControlKey = $RestartControlKey
 
 
 func _ready() -> void:
@@ -18,6 +19,7 @@ func _ready() -> void:
 	hand.pivoted.connect(Callable(self, "moved"))
 	score_counter.text = str(total_score)
 	timer.gameover.connect(Callable(self, "game_over"))
+	restart_key.restart_pressed.connect(Callable(self, "restart"))
 
 
 func _physics_process(_delta: float) -> void:
@@ -62,6 +64,7 @@ func game_over() -> void:
 	game_state = State.GAMEOVER
 	hand.game_over()
 	$TopBar.game_over()
+	restart_key.game_over()
 
 
 func restart() -> void:
@@ -70,3 +73,4 @@ func restart() -> void:
 	hand.new_game()
 	hand.deselect_all()
 	$TopBar.new_game()
+	restart_key.new_game()

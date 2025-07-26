@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqh4be70g6bi3"]
+
+[ext_resource type="PackedScene" uid="uid://baf7w6gsreqts" path="res://scenes/control_key.tscn" id="1_cgm6q"]
+[ext_resource type="Script" uid="uid://rts2shyu8vwg" path="res://scripts/controls/restart_control_key.gd" id="2_fu1wx"]
+[ext_resource type="Texture2D" uid="uid://dxhy8gygkwii" path="res://assets/restartkey.png" id="3_qeihn"]
+
+[node name="RestartControlKey" instance=ExtResource("1_cgm6q")]
+script = ExtResource("2_fu1wx")
+
+[node name="TextureButton" parent="." index="0"]
+texture_normal = ExtResource("3_qeihn")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
