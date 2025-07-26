@@ -1,0 +1,3 @@
+# Install these on the linux subsystem (these commands should not have .exe after being installed)
+gdtoolkit
+pre-commit
