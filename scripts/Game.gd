@@ -22,13 +22,12 @@ func _ready() -> void:
 	restart_key.restart_pressed.connect(Callable(self, "restart"))
 
 
-func _physics_process(_delta: float) -> void:
-	match game_state:
-		State.RUNNING:
-			if Input.is_action_just_pressed("DEBUG_END"):
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("DEBUG_END"):
+		match game_state:
+			State.RUNNING:
 				game_over()
-		State.GAMEOVER:
-			if Input.is_action_just_pressed("DEBUG_END"):
+			State.GAMEOVER:
 				restart()
 
 

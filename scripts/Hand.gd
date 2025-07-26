@@ -42,35 +42,37 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("Pivot"):
+	position = lerp(position, off_screen, 20 * delta)
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("Pivot"):
 		if can_pivot(selected_keys):
 			pivot(selected_keys[0], selected_keys[1])
 
-	if Input.is_action_just_pressed("Submit"):
+	if event.is_action_pressed("Submit"):
 		selected_keys.sort()
 		if can_submit(selected_keys):
 			var str: String = get_hand_string(selected_keys.min(), selected_keys.max())
 			var score: int = get_score()
 			check_words.emit(str, score)
 
-	if Input.is_action_just_pressed("Release"):
+	if event.is_action_pressed("Release"):
 		for i: Key in keys:
 			i.deselect()
 
-	if Input.is_action_just_pressed("ONE"):
+	if event.is_action_pressed("ONE"):
 		keys[0].on_click()
-	if Input.is_action_just_pressed("TWO"):
+	if event.is_action_pressed("TWO"):
 		keys[1].on_click()
-	if Input.is_action_just_pressed("THREE"):
+	if event.is_action_pressed("THREE"):
 		keys[2].on_click()
-	if Input.is_action_just_pressed("FOUR"):
+	if event.is_action_pressed("FOUR"):
 		keys[3].on_click()
-	if Input.is_action_just_pressed("FIVE"):
+	if event.is_action_pressed("FIVE"):
 		keys[4].on_click()
-	if Input.is_action_just_pressed("SIX"):
+	if event.is_action_pressed("SIX"):
 		keys[5].on_click()
-
-	position = lerp(position, off_screen, 20 * delta)
 
 
 # Remove selected keys from game and generate new ones at the tail.
