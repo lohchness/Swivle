@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://baf7w6gsreqts"]
+
+[ext_resource type="Script" uid="uid://dybuxasmkxan4" path="res://scripts/controlKey.gd" id="1_slk1u"]
+
+[node name="ControlKey" type="Node2D"]
+script = ExtResource("1_slk1u")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.5, 2.5)
+pivot_offset = Vector2(19.76, 20.32)
+
+[connection signal="mouse_entered" from="TextureButton" to="." method="_on_texture_button_mouse_entered"]
