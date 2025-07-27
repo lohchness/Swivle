@@ -198,13 +198,13 @@ func get_score() -> int:
 	return sum
 
 
-func game_over() -> void:
+func move_off_screen(offset: Vector2) -> void:
 	#set_physics_process(false)
-	off_screen = base_position - Vector2(0, 500)
+	off_screen = base_position - offset
 
 	#for key in keys:
 	#key.set_physics_process(false)
 
 
-func new_game() -> void:
+func move_on_screen() -> void:
 	off_screen = base_position

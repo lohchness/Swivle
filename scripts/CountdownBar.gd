@@ -67,12 +67,7 @@ func change_rate(to: int) -> void:
 	curr_rate = to
 
 
-func game_over() -> void:
-	curr_rate = 0
-	set_physics_process(false)
-
-
-func new_game() -> void:
+func restart_timer() -> void:
 	curr_rate = START_RATE
 	percentage = 1.0
 	target_percentage = percentage
@@ -85,6 +80,5 @@ func pause() -> void:
 
 
 func unpause() -> void:
-	curr_rate = START_RATE
-	set_physics_process(true)
 	update_rate()
+	set_physics_process(true)

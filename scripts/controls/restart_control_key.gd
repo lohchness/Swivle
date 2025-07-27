@@ -3,7 +3,7 @@ extends ControlKey
 
 signal restart_pressed
 
-const TARGET: Vector2 = Vector2(576, 352)
+const TARGET: Vector2 = Vector2(576, 337)
 
 var base_position: Vector2
 var offset: Vector2
@@ -21,11 +21,11 @@ func _physics_process(delta: float) -> void:
 	position = lerp(position, base_position + offset, 20 * delta)
 
 
-func game_over() -> void:
+func move_on_screen() -> void:
 	offset = TARGET - base_position
 
 
-func new_game() -> void:
+func move_off_screen() -> void:
 	offset = Vector2.ZERO
 
 

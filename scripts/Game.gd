@@ -8,6 +8,7 @@ var text: String = ""
 
 @onready var hand: Hand = $Hand
 @onready var processor: Processor = $WordProcessor
+@onready var topbar: TopBar = $TopBar
 @onready var score_counter: Label = $TopBar/ScoreWindow/ScoreCounter
 @onready var timer: CountdownBar = $TopBar/Timer
 @onready var restart_key: RestartControlKey = $RestartControlKey
@@ -61,15 +62,24 @@ func check_word(word: String, score: int) -> void:
 
 func game_over() -> void:
 	game_state = State.GAMEOVER
-	hand.game_over()
-	$TopBar.game_over()
-	restart_key.game_over()
+
+	var offset: Vector2 = Vector2(0, 500)
+	hand.move_off_screen(offset)
+
+	topbar.move_off_screen(offset)
+	topbar.pause_timer()
+
+	restart_key.move_off_screen()
 
 
 func restart() -> void:
 	game_state = State.RUNNING
 	new_game()
-	hand.new_game()
+
+	hand.move_on_screen()
 	hand.deselect_all()
-	$TopBar.new_game()
-	restart_key.new_game()
+
+	topbar.move_on_screen()
+	topbar.restart_timer()
+
+	restart_key.move_on_screen()
