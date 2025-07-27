@@ -199,12 +199,10 @@ func get_score() -> int:
 
 
 func move_off_screen(offset: Vector2) -> void:
-	#set_physics_process(false)
+	set_process_input(false)
 	off_screen = base_position - offset
-
-	#for key in keys:
-	#key.set_physics_process(false)
 
 
 func move_on_screen() -> void:
+	set_process_input(true)
 	off_screen = base_position

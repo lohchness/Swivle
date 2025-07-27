@@ -79,6 +79,6 @@ func pause() -> void:
 	set_physics_process(false)
 
 
-func unpause() -> void:
+func resume() -> void:
 	update_rate()
 	set_physics_process(true)

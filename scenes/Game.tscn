@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ccrooakwud30n"]
+[gd_scene load_steps=14 format=3 uid="uid://ccrooakwud30n"]
 
 [ext_resource type="Script" uid="uid://blcsq0yivvflr" path="res://scripts/Game.gd" id="1_d0sg0"]
 [ext_resource type="PackedScene" uid="uid://dwr7ox45xkroh" path="res://scenes/processor.tscn" id="2_ahnbo"]
@@ -12,10 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://ctau5r7efkgkr" path="res://scenes/Countdown.tscn" id="9_yiqp2"]
 [ext_resource type="PackedScene" uid="uid://dbg1ecfoostfo" path="res://scenes/score_window.tscn" id="10_3xj3m"]
 [ext_resource type="PackedScene" uid="uid://cqh4be70g6bi3" path="res://scenes/controls/restart_control_key.tscn" id="12_mcffj"]
+[ext_resource type="PackedScene" uid="uid://fpsdfujpr5sx" path="res://scenes/controls/play_control_key.tscn" id="13_2rd6h"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_d0sg0")
 metadata/_edit_vertical_guides_ = [576.0]
+metadata/_edit_horizontal_guides_ = [746.0]
 
 [node name="Checkerboard" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -114,3 +116,6 @@ position = Vector2(565, 116)
 
 [node name="RestartControlKey" parent="." instance=ExtResource("12_mcffj")]
 position = Vector2(576, 796)
+
+[node name="PlayControlKey" parent="." instance=ExtResource("13_2rd6h")]
+position = Vector2(455, 796)

@@ -28,5 +28,9 @@ func pause_timer() -> void:
 	timer.pause()
 
 
+func resume_timer() -> void:
+	timer.resume()
+
+
 func restart_timer() -> void:
 	timer.restart_timer()
