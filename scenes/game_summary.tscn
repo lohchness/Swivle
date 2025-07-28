@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bc4dfk8a4t51b"]
+[gd_scene load_steps=3 format=3 uid="uid://bc4dfk8a4t51b"]
 
 [ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="1_i0gj5"]
+[ext_resource type="Script" uid="uid://b1u5d8bt2u03s" path="res://scripts/game_summary.gd" id="1_k0jbl"]
 
 [node name="GameSummary" type="GridContainer"]
 offset_right = 334.0
@@ -8,6 +9,7 @@ offset_bottom = 132.0
 mouse_filter = 2
 theme_override_constants/h_separation = 70
 columns = 2
+script = ExtResource("1_k0jbl")
 
 [node name="ScoreLabel" type="Label" parent="."]
 layout_mode = 2

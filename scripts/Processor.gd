@@ -9,6 +9,8 @@ var fours: Array[String]
 var fives: Array[String]
 var sixes: Array[String]
 
+var chosen_word: String = ""
+
 @onready var filtered_words: String = "res://assets/filtered.txt"
 
 
@@ -34,6 +36,7 @@ func load_file() -> void:
 	f.close()
 
 
+# TODO Update word choice algorithm
 func get_next_string(letters: String) -> String:
 	print("-----------------------")
 	var remaining_letters: int = NUM_KEYS - len(letters)
@@ -73,6 +76,9 @@ func get_next_string(letters: String) -> String:
 		print(": " + rest_str)
 
 	print(letters + " + " + chosen + " + " + rest_str)
+
+	# For game summary
+	chosen_word = chosen
 
 	chosen = shuffle_string(chosen)
 	print_debug(letters + chosen + rest_str)

@@ -73,11 +73,16 @@ func resume_game() -> void:
 func game_over() -> void:
 	game_state = State.GAMEOVER
 
+	# Push stats to globals
+	Globals.score = total_score
+	Globals.word = processor.chosen_word
+
 	var offset: Vector2 = Vector2(0, 500)
 	hand.move_off_screen(offset)
 	topbar.move_off_screen(offset)
 	topbar.pause_timer()
 
+	# TODO: Refactor when implementing gameover scene
 	restart_key.move_on_screen()
 
 
