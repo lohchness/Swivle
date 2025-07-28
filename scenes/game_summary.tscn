@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc4dfk8a4t51b"]
+
+[ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="1_i0gj5"]
+
+[node name="GameSummary" type="GridContainer"]
+offset_right = 334.0
+offset_bottom = 132.0
+mouse_filter = 2
+theme_override_constants/h_separation = 70
+columns = 2
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_i0gj5")
+theme_override_font_sizes/font_size = 80
+text = "SCORE"
+
+[node name="Score" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_i0gj5")
+theme_override_font_sizes/font_size = 80
+text = "0"
+horizontal_alignment = 2
+
+[node name="WordLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_i0gj5")
+theme_override_font_sizes/font_size = 80
+text = "SELECTED"
+
+[node name="Word" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_i0gj5")
+theme_override_font_sizes/font_size = 80
+text = "SWIVLE"
+horizontal_alignment = 2
+uppercase = true
