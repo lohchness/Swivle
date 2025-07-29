@@ -1,5 +1,5 @@
 class_name Hand
-extends Node2D
+extends TwoStateSwitch
 
 signal key_selected(index: int)
 signal check_words(word: String, score: int)
@@ -19,6 +19,7 @@ var off_screen: Vector2  # Offset when game is over
 
 
 func _ready() -> void:
+	super()
 	# Initialize 6 Keys in Hand
 	for i: int in range(NUM_KEYS):
 		var newkey: Key = key_scene.instantiate()
@@ -36,13 +37,6 @@ func _ready() -> void:
 		newkey.set_number(i)
 		newkey.select_signal.connect(Callable(self, "key_select_signal"))
 		newkey.deselect_signal.connect(Callable(self, "key_deselect_signal"))
-
-	base_position = position
-	off_screen = base_position
-
-
-func _physics_process(delta: float) -> void:
-	position = lerp(position, off_screen, 20 * delta)
 
 
 func _input(event: InputEvent) -> void:
@@ -196,13 +190,3 @@ func get_score() -> int:
 	for i: int in selected_keys:
 		sum += keys[i].get_score()
 	return sum
-
-
-func move_off_screen(offset: Vector2) -> void:
-	set_process_input(false)
-	off_screen = base_position - offset
-
-
-func move_on_screen() -> void:
-	set_process_input(true)
-	off_screen = base_position
