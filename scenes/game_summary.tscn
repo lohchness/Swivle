@@ -3,22 +3,29 @@
 [ext_resource type="FontFile" uid="uid://cdlnld13sd0o2" path="res://assets/monogram.ttf" id="1_i0gj5"]
 [ext_resource type="Script" uid="uid://b1u5d8bt2u03s" path="res://scripts/game_summary.gd" id="1_k0jbl"]
 
-[node name="GameSummary" type="GridContainer"]
-offset_right = 334.0
-offset_bottom = 132.0
+[node name="CenterContainer" type="CenterContainer"]
+offset_top = 235.0
+offset_right = 150.0
+offset_bottom = 235.0
+
+[node name="GameSummary" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
 mouse_filter = 2
 theme_override_constants/h_separation = 70
+theme_override_constants/v_separation = 20
 columns = 2
 script = ExtResource("1_k0jbl")
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="GameSummary"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_i0gj5")
 theme_override_font_sizes/font_size = 80
 text = "SCORE"
 
-[node name="Score" type="Label" parent="."]
+[node name="Score" type="Label" parent="GameSummary"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_i0gj5")
@@ -26,14 +33,15 @@ theme_override_font_sizes/font_size = 80
 text = "0"
 horizontal_alignment = 2
 
-[node name="WordLabel" type="Label" parent="."]
+[node name="WordLabel" type="Label" parent="GameSummary"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_i0gj5")
 theme_override_font_sizes/font_size = 80
-text = "SELECTED"
+text = "VALID
+PLAYS"
 
-[node name="Word" type="Label" parent="."]
+[node name="Word" type="Label" parent="GameSummary"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_i0gj5")
