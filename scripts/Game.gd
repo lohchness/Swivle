@@ -50,9 +50,8 @@ func new_game() -> void:
 func pause_game() -> void:
 	game_state = State.PAUSED
 
-	var offset: Vector2 = Vector2(0, 500)
-	hand.move_off_screen(offset)
-	topbar.move_off_screen(offset)
+	hand.move_off_screen()
+	topbar.move_off_screen()
 	topbar.pause_timer()
 
 	restart_key.move_on_screen()
@@ -77,9 +76,8 @@ func game_over() -> void:
 	Globals.score = total_score
 	Globals.word = processor.chosen_word
 
-	var offset: Vector2 = Vector2(0, 500)
-	hand.move_off_screen(offset)
-	topbar.move_off_screen(offset)
+	hand.move_off_screen()
+	topbar.move_off_screen()
 	topbar.pause_timer()
 
 	# TODO: Refactor when implementing gameover scene
