@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://fpsdfujpr5sx"]
 
 [ext_resource type="PackedScene" uid="uid://baf7w6gsreqts" path="res://scenes/control_key.tscn" id="1_qobmu"]
-[ext_resource type="Script" uid="uid://d0hi0l0beutq0" path="res://scripts/controls/play_control.gd" id="2_0tmev"]
+[ext_resource type="Script" uid="uid://d0hi0l0beutq0" path="res://scripts/controls/play_control_key.gd" id="2_0tmev"]
 [ext_resource type="Texture2D" uid="uid://bnek808igiiwn" path="res://assets/playkey.png" id="3_0tmev"]
 
 [node name="PlayControlKey" instance=ExtResource("1_qobmu")]

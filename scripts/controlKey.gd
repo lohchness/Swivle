@@ -1,5 +1,5 @@
 class_name ControlKey
-extends Node2D
+extends TwoStateSwitch
 
 ## Abstract class ControlKey
 ## This class is for control buttons, i.e. Play, Quit, Pause, Resume, Options.
@@ -13,10 +13,12 @@ var curr_tilt: float = 0
 
 
 func _ready() -> void:
+	super()
 	button.focus_mode = 0
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	super(delta)
 	button.rotation = curr_tilt
 	curr_tilt /= 2
 
