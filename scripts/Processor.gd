@@ -94,15 +94,25 @@ func any(letters: String, word: String) -> bool:
 	return false
 
 
-func string_difference(word1: String, word2: String) -> String:
-	# TODO : There may be more than one occurence, change it so that it only does it N times
-	var newstr: String = ""
-	for i: String in word2:
-		if i not in word1:
-			newstr += i
+func string_difference(current: String, to_add: String) -> String:
+	var remainder: String = ""
+
+	var letters_count: Dictionary[String, int] = {}
+	for letter: String in current:
+		if letter not in letters_count:
+			letters_count[letter] = 0
+		letters_count[letter] += 1
+
+	for letter: String in to_add:
+		if letter not in letters_count:
+			remainder += letter
 		else:
-			pass
-	return newstr
+			if letters_count[letter] > 0:
+				letters_count[letter] -= 1
+			else:
+				remainder += letter
+
+	return remainder
 
 
 func pick_random_n(word: String, n: int) -> String:
