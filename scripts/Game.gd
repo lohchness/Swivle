@@ -13,6 +13,7 @@ var text: String = ""
 @onready var timer: CountdownBar = $TopBar/Timer
 @onready var restart_key: RestartControlKey = $RestartControlKey
 @onready var resume_key: PlayControlKey = $PlayControlKey
+@onready var end_game: EndGame = $EndGame
 
 
 func _ready() -> void:
@@ -23,6 +24,7 @@ func _ready() -> void:
 	timer.gameover.connect(Callable(self, "game_over"))
 	restart_key.restart_pressed.connect(Callable(self, "restart"))
 	resume_key.play_pressed.connect(Callable(self, "resume_game"))
+	end_game.restart_game.connect(Callable(self, "restart"))
 
 
 func _input(event: InputEvent) -> void:
@@ -80,8 +82,7 @@ func game_over() -> void:
 	topbar.move_off_screen()
 	topbar.pause_timer()
 
-	# TODO: Refactor when implementing gameover scene
-	restart_key.move_on_screen()
+	end_game.bulk_move_on_screen()
 
 
 func restart() -> void:
@@ -95,6 +96,8 @@ func restart() -> void:
 
 	restart_key.move_off_screen()
 	resume_key.move_off_screen()
+
+	end_game.bulk_move_off_screen()
 
 
 func add_score(score: int) -> void:
