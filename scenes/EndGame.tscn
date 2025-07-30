@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://k60b7mpnl7pw" path="res://assets/Corner.png" id="2_w2lcc"]
 [ext_resource type="Texture2D" uid="uid://diixlb0omic6u" path="res://assets/Wall.png" id="3_4hd24"]
 [ext_resource type="PackedScene" uid="uid://bc4dfk8a4t51b" path="res://scenes/game_summary.tscn" id="4_t0qxb"]
-[ext_resource type="PackedScene" uid="uid://fpsdfujpr5sx" path="res://scenes/controls/play_control_key.tscn" id="5_4hd24"]
 [ext_resource type="PackedScene" uid="uid://cqh4be70g6bi3" path="res://scenes/controls/restart_control_key.tscn" id="6_t0qxb"]
+[ext_resource type="PackedScene" uid="uid://cic0d12elc2t1" path="res://scenes/controls/quit_control_key.tscn" id="7_t0qxb"]
 
 [node name="EndGame" type="Node2D"]
 script = ExtResource("1_t0qxb")
@@ -96,15 +96,15 @@ offset_vector = Vector2(0, 550)
 on_screen_in_editor = true
 should_start_off_screen = true
 
-[node name="PlayControlKey" parent="." instance=ExtResource("5_4hd24")]
-position = Vector2(284, 343)
+[node name="RestartControlKey" parent="." instance=ExtResource("6_t0qxb")]
+position = Vector2(403, 342)
 use_editor_as_start = true
 offset_vector = Vector2(0, 400)
 on_screen_in_editor = true
 should_start_off_screen = true
 
-[node name="RestartControlKey" parent="." instance=ExtResource("6_t0qxb")]
-position = Vector2(403, 342)
+[node name="QuitControlKey" parent="." instance=ExtResource("7_t0qxb")]
+position = Vector2(279, 342)
 use_editor_as_start = true
 offset_vector = Vector2(0, 400)
 on_screen_in_editor = true

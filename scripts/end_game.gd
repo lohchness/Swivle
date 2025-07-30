@@ -10,12 +10,12 @@ extends Node2D
 signal restart_game
 
 @onready var gamesummary: GameSummary = $GameSummary
-@onready var play_key: PlayControlKey = $PlayControlKey
+@onready var quit_key: QuitControlKey = $QuitControlKey
 @onready var restart_key: RestartControlKey = $RestartControlKey
 
 
 func _ready() -> void:
-	play_key.connect("play_pressed", Callable(self, "playpress"))
+	quit_key.connect("quit_pressed", Callable(self, "playpress"))
 	restart_key.connect("restart_pressed", Callable(self, "restartpress"))
 	#switch_all()
 
@@ -26,18 +26,18 @@ func restartpress() -> void:
 
 
 func switch_all() -> void:
-	play_key.switch_position()
+	quit_key.switch_position()
 	restart_key.switch_position()
 	gamesummary.switch_position()
 
 
 func bulk_move_off_screen() -> void:
-	play_key.move_off_screen()
+	quit_key.move_off_screen()
 	restart_key.move_off_screen()
 	gamesummary.move_off_screen()
 
 
 func bulk_move_on_screen() -> void:
-	play_key.move_on_screen()
+	quit_key.move_on_screen()
 	restart_key.move_on_screen()
 	gamesummary.move_on_screen()
