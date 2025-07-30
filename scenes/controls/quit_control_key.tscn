@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cic0d12elc2t1"]
+
+[ext_resource type="PackedScene" uid="uid://baf7w6gsreqts" path="res://scenes/control_key.tscn" id="1_f05mn"]
+[ext_resource type="Texture2D" uid="uid://ddirxivvh34ib" path="res://assets/quitkey.png" id="2_dws12"]
+[ext_resource type="Script" uid="uid://msjdf2um4lav" path="res://scripts/controls/quit_control_key.gd" id="2_kco6x"]
+
+[node name="QuitControlKey" instance=ExtResource("1_f05mn")]
+script = ExtResource("2_kco6x")
+
+[node name="TextureButton" parent="." index="0"]
+texture_normal = ExtResource("2_dws12")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
