@@ -13,6 +13,7 @@ var text: String = ""
 @onready var timer: CountdownBar = $TopBar/Timer
 @onready var restart_key: RestartControlKey = $RestartControlKey
 @onready var resume_key: PlayControlKey = $PlayControlKey
+@onready var quit_key: QuitControlKey = $QuitControlKey
 @onready var end_game: EndGame = $EndGame
 
 
@@ -24,6 +25,7 @@ func _ready() -> void:
 	timer.gameover.connect(Callable(self, "game_over"))
 	restart_key.restart_pressed.connect(Callable(self, "restart"))
 	resume_key.play_pressed.connect(Callable(self, "resume_game"))
+	quit_key.quit_pressed.connect(Callable(self, "quit_game"))
 	end_game.restart_game.connect(Callable(self, "restart"))
 
 
@@ -58,6 +60,7 @@ func pause_game() -> void:
 
 	restart_key.move_on_screen()
 	resume_key.move_on_screen()
+	quit_key.move_on_screen()
 
 
 func resume_game() -> void:
@@ -69,6 +72,7 @@ func resume_game() -> void:
 
 	restart_key.move_off_screen()
 	resume_key.move_off_screen()
+	quit_key.move_off_screen()
 
 
 func game_over() -> void:
@@ -96,8 +100,13 @@ func restart() -> void:
 
 	restart_key.move_off_screen()
 	resume_key.move_off_screen()
+	quit_key.move_off_screen()
 
 	end_game.bulk_move_off_screen()
+
+
+func quit_game() -> void:
+	return
 
 
 func add_score(score: int) -> void:
