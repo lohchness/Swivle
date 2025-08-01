@@ -22,10 +22,6 @@ var target_opacity: int
 var base_position: Vector2
 var shade_base_position: Vector2
 
-var curr_scale: Vector2
-var base_scale: Vector2
-var zoom_in_scalar: float = 1.1
-
 var letter_points: Dictionary[int, Array] = {
 	1: ["E", "A", "I", "O", "N", "R", "T", "L", "S", "U"],
 	2: ["D", "G"],
@@ -60,8 +56,6 @@ func _ready() -> void:
 	base_position = position
 	shade_base_position = $keySprites/Shade.position
 	target_opacity = modulate.a8
-	base_scale = scale
-	curr_scale = base_scale
 
 	# Choose a colour
 	var color: Array = colors.pick_random()
@@ -110,11 +104,6 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 
 func _on_area_2d_mouse_entered() -> void:
 	wiggle()
-	zoom_in()
-
-
-func _on_area_2d_mouse_exited() -> void:
-	zoom_out()
 
 
 func on_click() -> void:
@@ -174,11 +163,3 @@ func disappear() -> void:
 
 func wiggle() -> void:
 	curr_tilt = max_tilt
-
-
-func zoom_in() -> void:
-	curr_scale = base_scale * zoom_in_scalar
-
-
-func zoom_out() -> void:
-	curr_scale = base_scale
