@@ -34,8 +34,8 @@ func _ready() -> void:
 
 		newkey.set_letter(str(i))
 		newkey.number = i
-		newkey.select_signal.connect(Callable(add_key_to_selection))
-		newkey.deselect_signal.connect(Callable(remove_key_from_selection))
+		newkey.on_key_select.connect(Callable(add_key_to_selection))
+		newkey.on_key_deselect.connect(Callable(remove_key_from_selection))
 
 
 func _input(event: InputEvent) -> void:
@@ -122,8 +122,8 @@ func add_new_letters(letters: String) -> void:
 		keys.append(newkey)
 		newkey.position = Vector2(x_offset + winsize.x, winsize.y / 2)
 		newkey.set_letter(str(i))
-		newkey.select_signal.connect(Callable(add_key_to_selection))
-		newkey.deselect_signal.connect(Callable(remove_key_from_selection))
+		newkey.on_key_select.connect(Callable(add_key_to_selection))
+		newkey.on_key_deselect.connect(Callable(remove_key_from_selection))
 
 	update_hand_positions()
 

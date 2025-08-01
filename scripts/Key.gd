@@ -1,9 +1,8 @@
 class_name Key
 extends Node2D
 
-signal select_signal(number: int)
-signal deselect_signal(number: int)
-signal is_removed(number: int)
+signal on_key_select(number: int)
+signal on_key_deselect(number: int)
 
 const TOP: int = 0
 const EDGE: int = 1
@@ -48,8 +47,6 @@ var shade_color: Color = Color("000000", .5)  # Grayscale with alpha value 133
 
 @onready var letter: Label = $Letter
 @onready var score: Label = $Score
-@onready var area: Area2D = $Area2D
-@onready var collision: CollisionShape2D = $Area2D/CollisionShape2D
 
 
 func _ready() -> void:
@@ -114,12 +111,12 @@ func on_click() -> void:
 
 
 func select() -> void:
-	select_signal.emit(number)
+	on_key_select.emit(number)
 	selected = true
 
 
 func deselect() -> void:
-	deselect_signal.emit(number)
+	on_key_deselect.emit(number)
 	selected = false
 
 

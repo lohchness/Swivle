@@ -5,8 +5,8 @@ extends Node2D
 ## Intended for the Main Menu. Only has key and shade sprites.
 ## Can be selected, pivoted, and removed.
 
-signal select_signal(number: int)
-signal deselect_signal(number: int)
+signal on_key_select(number: int)
+signal on_key_deselect(number: int)
 
 const SELECTED_PIXELS: int = 50  # amount of pixels to be raised when selected
 
@@ -74,10 +74,10 @@ func on_click() -> void:
 
 
 func select() -> void:
-	select_signal.emit(number)
+	on_key_select.emit(number)
 	selected = true
 
 
 func deselect() -> void:
-	deselect_signal.emit(number)
+	on_key_deselect.emit(number)
 	selected = false
