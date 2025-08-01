@@ -29,25 +29,6 @@ var at_target_position: bool
 func _ready() -> void:
 	at_target_position = on_screen_in_editor
 
-	### FIXME Horrendous code
-	#if use_editor_as_start and on_screen_in_editor:
-	#at_target_position = true
-	#on_screen_position = position
-	#off_screen_position = position + offset_vector
-	#elif not use_editor_as_start and on_screen_in_editor:
-	#at_target_position = true
-	#on_screen_position = target_position
-	#off_screen_position = target_position + offset_vector
-#
-	#elif use_editor_as_start and not on_screen_in_editor:
-	#at_target_position = false
-	#on_screen_position = position + offset_vector
-	#off_screen_position = position
-	#elif not use_editor_as_start and not on_screen_in_editor:
-	#at_target_position = false
-	#on_screen_position = target_position + offset_vector
-	#off_screen_position = target_position
-
 	if on_screen_in_editor:
 		on_screen_position = position if use_editor_as_start else target_position
 		off_screen_position = on_screen_position + offset_vector

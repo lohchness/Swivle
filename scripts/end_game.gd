@@ -15,14 +15,13 @@ signal restart_game
 
 
 func _ready() -> void:
-	quit_key.connect("quit_pressed", Callable(self, "playpress"))
-	restart_key.connect("restart_pressed", Callable(self, "restartpress"))
-	#switch_all()
+	# TODO: Quit key leads to start menu
+	# quit_key.connect("quit_pressed", Callable(quitpress))
+	restart_key.connect("restart_pressed", Callable(restartpress))
 
 
 func restartpress() -> void:
 	restart_game.emit()
-	#switch_all()
 
 
 func switch_all() -> void:

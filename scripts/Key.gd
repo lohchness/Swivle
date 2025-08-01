@@ -87,9 +87,6 @@ func _physics_process(delta: float) -> void:
 	$Score.rotation = curr_tilt * 2
 	curr_tilt /= 2
 
-	# TODO : Scale from center
-	#scale = lerp(scale, curr_scale, 50 * delta)
-
 	# Disappear and free on submit
 	modulate.a8 = lerp(modulate.a8, target_opacity, 25 * delta)
 	if modulate.a8 == 0:
@@ -126,35 +123,17 @@ func deselect() -> void:
 	selected = false
 
 
-func get_letter() -> String:
-	return letter.text
-
-
 func set_letter(l: String) -> void:
 	letter.text = l
-	set_score()
 
-
-func get_score() -> int:
-	return int(score.text)
-
-
-func set_score() -> void:
+	# Sets score
 	for point: int in letter_points:
-		if letter.text in letter_points[point]:
+		if l in letter_points[point]:
 			score.text = str(point)
 
 
 func set_base_position(p: Vector2) -> void:
 	base_position = p
-
-
-func set_number(i: int) -> void:
-	number = i
-
-
-func get_number() -> int:
-	return number
 
 
 func disappear() -> void:

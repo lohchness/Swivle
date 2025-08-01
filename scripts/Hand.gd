@@ -3,7 +3,6 @@ extends TwoStateSwitch
 
 signal key_selected(index: int)
 signal check_words(word: String, score: int)
-signal pivoted
 
 const NUM_KEYS: int = 6
 
@@ -34,21 +33,21 @@ func _ready() -> void:
 		newkey.position = initial_position  # Initialize position at game start
 
 		newkey.set_letter(str(i))
-		newkey.set_number(i)
-		newkey.select_signal.connect(Callable(self, "key_select_signal"))
-		newkey.deselect_signal.connect(Callable(self, "key_deselect_signal"))
+		newkey.number = i
+		newkey.select_signal.connect(Callable(add_key_to_selection))
+		newkey.deselect_signal.connect(Callable(remove_key_from_selection))
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Pivot"):
-		if can_pivot(selected_keys):
+		if len(selected_keys) == 2:
 			pivot(selected_keys[0], selected_keys[1])
 
 	if event.is_action_pressed("Submit"):
 		selected_keys.sort()
 		if can_submit(selected_keys):
-			var str: String = get_hand_string(selected_keys.min(), selected_keys.max())
-			var score: int = get_score()
+			var str: String = get_string_from_selection(selected_keys[0], selected_keys[-1])
+			var score: int = get_score_from_selection(selected_keys[0], selected_keys[-1])
 			check_words.emit(str, score)
 
 	if event.is_action_pressed("Release"):
@@ -69,78 +68,10 @@ func _input(event: InputEvent) -> void:
 		keys[5].on_click()
 
 
-# Remove selected keys from game and generate new ones at the tail.
-func valid_word() -> void:
-	# Update Key array
-	var tmpkeys: Array[Key] = []
-	for i: int in range(len(keys)):
-		if i not in selected_keys:
-			tmpkeys.append(keys[i])
-
-	for i: int in selected_keys:
-		keys[i].disappear()
-
-	keys = tmpkeys
-	update_hand_numbers()
-	update_hand_positions()
-
-	selected_keys = []
-
-
-func append_letters(letters: String) -> void:
-	for i: String in letters:
-		var newkey: Key = key_scene.instantiate()
-		add_child(newkey)
-		keys.append(newkey)
-		newkey.position = Vector2(x_offset + winsize.x, winsize.y / 2)
-		newkey.set_letter(str(i))
-		newkey.select_signal.connect(Callable(self, "key_select_signal"))
-		newkey.deselect_signal.connect(Callable(self, "key_deselect_signal"))
-
-	update_hand_numbers()
-	update_hand_positions()
-
-
-# Invalid word
-func invalid_word() -> void:
-	for i: int in selected_keys:
-		keys[i].wiggle()
-
-
-func key_select_signal(number: int) -> void:
-	selected_keys.append(number)
-
-
-func key_deselect_signal(number: int) -> void:
-	selected_keys.erase(number)
-
-
-func deselect_all() -> void:
-	for i: Key in keys:
-		i.deselect()
-
-
-func set_hand_string(word: String) -> void:
-	for i: int in range(len(word)):
-		keys[i].set_letter(word[i])
-
-
-func get_hand_string_all() -> String:
-	var str: String = ""
-	for i: Key in keys:
-		str += i.get_letter()
-	return str
-
-
-func get_hand_string(from: int, to: int) -> String:
-	var str: String = ""
-	for i: int in range(from, to + 1):
-		str += keys[i].get_letter()
-	return str
+## HAND METHODS ##
 
 
 func pivot(start: int, end: int) -> void:  # Indexes of keys. Start < End. Is 0-indexed.
-	pivoted.emit()
 	var tmp1: int = max(start, end)
 	var tmp2: int = min(start, end)
 	start = tmp2
@@ -155,19 +86,78 @@ func pivot(start: int, end: int) -> void:  # Indexes of keys. Start < End. Is 0-
 		end -= 1
 
 	update_hand_positions()
-	update_hand_numbers()
+
+
+# Remove selected keys from game
+func valid_submission() -> void:
+	# Update Key array
+	var tmpkeys: Array[Key] = []
+	for i: int in range(len(keys)):
+		if i not in selected_keys:
+			tmpkeys.append(keys[i])
+
+	for i: int in selected_keys:
+		keys[i].disappear()
+
+	keys = tmpkeys
+	update_hand_positions()
+
+	selected_keys = []
+
+
+# Wiggle invalid words
+func invalid_submission() -> void:
+	for i: int in selected_keys:
+		keys[i].wiggle()
+
+
+# Add newly generated letters to tail
+func add_new_letters(letters: String) -> void:
+	for i: String in letters:
+		var newkey: Key = key_scene.instantiate()
+		add_child(newkey)
+		keys.append(newkey)
+		newkey.position = Vector2(x_offset + winsize.x, winsize.y / 2)
+		newkey.set_letter(str(i))
+		newkey.select_signal.connect(Callable(add_key_to_selection))
+		newkey.deselect_signal.connect(Callable(remove_key_from_selection))
+
+	update_hand_positions()
+
+
+func set_hand_string(word: String) -> void:
+	for i: int in range(len(word)):
+		keys[i].set_letter(word[i])
+
+
+func get_hand_as_string() -> String:
+	var str: String = ""
+	for i: Key in keys:
+		str += i.letter.text
+	return str
+
+
+func get_string_from_selection(from: int, to: int) -> String:
+	var str: String = ""
+	for i: int in range(from, to + 1):
+		str += keys[i].letter.text
+	return str
+
+
+func get_score_from_selection(from: int, to: int) -> int:
+	var sum: int = 0
+	for i: int in range(from, to + 1):
+		sum += int(keys[i].score.text)
+	return sum
+
+
+## HELPERS ##
 
 
 func update_hand_positions() -> void:
 	for i: int in range(len(keys)):
 		keys[i].number = i
 		keys[i].set_base_position(Vector2(x_offset + (i * winsize.x / NUM_KEYS), winsize.y / 2))
-
-
-func update_hand_numbers() -> void:
-	pass
-	#for i in range(len(keys)):
-	#keys[i].number = i
 
 
 func is_consecutive(selected_keys: Array[int]) -> bool:
@@ -181,12 +171,14 @@ func can_submit(selected_keys: Array[int]) -> bool:
 	return len(selected_keys) > 2 and is_consecutive(selected_keys)
 
 
-func can_pivot(selected_keys: Array[int]) -> bool:
-	return len(selected_keys) == 2
+func deselect_all() -> void:
+	for i: Key in keys:
+		i.deselect()
 
 
-func get_score() -> int:
-	var sum: int = 0
-	for i: int in selected_keys:
-		sum += keys[i].get_score()
-	return sum
+func add_key_to_selection(number: int) -> void:
+	selected_keys.append(number)
+
+
+func remove_key_from_selection(number: int) -> void:
+	selected_keys.erase(number)
