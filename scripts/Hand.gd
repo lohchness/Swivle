@@ -49,6 +49,9 @@ func _input(event: InputEvent) -> void:
 			var str: String = get_string_from_selection(selected_keys[0], selected_keys[-1])
 			var score: int = get_score_from_selection(selected_keys[0], selected_keys[-1])
 			check_words.emit(str, score)
+		else:
+			if len(selected_keys) > 2:
+				invalid_submission()
 
 	if event.is_action_pressed("Release"):
 		for i: Key in keys:
