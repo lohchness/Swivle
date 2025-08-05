@@ -98,7 +98,7 @@ region_rect = Rect2(0, 0, 1200, 700)
 
 [node name="Hand" parent="." instance=ExtResource("3_ep3bm")]
 use_editor_as_start = true
-offset_vector = Vector2(0, -500)
+offset_vector = Vector2(0, -550)
 on_screen_in_editor = true
 
 [node name="TopBar" type="Node2D" parent="."]

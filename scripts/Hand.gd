@@ -13,12 +13,18 @@ var x_offset: int = 25  # Initial position
 var base_position: Vector2
 var off_screen: Vector2  # Offset when game is over
 
-@onready var winsize: Vector2 = get_viewport().size
+var winsize: Vector2i
+
+#@onready var winsize: Vector2i = DisplayServer.screen_get_size()
 @onready var key_scene: PackedScene = preload("res://scenes/key.tscn")
 
 
 func _ready() -> void:
 	super()
+
+	## TEMPORARY
+	winsize = Vector2i(1152, 648)
+
 	# Initialize 6 Keys in Hand
 	for i: int in range(NUM_KEYS):
 		var newkey: Key = key_scene.instantiate()

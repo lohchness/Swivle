@@ -40,3 +40,6 @@ func bulk_move_on_screen() -> void:
 	quit_key.move_on_screen()
 	restart_key.move_on_screen()
 	gamesummary.move_on_screen()
+
+	## TEMPORARY (for demo)
+	gamesummary.score.text = str(Globals.score)
